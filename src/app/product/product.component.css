@@ -1,0 +1,9 @@
+.product-item {
+  border: #ccc 1px solid;
+}
+.product-item .image {
+  max-width: 120px;
+}
+.product-item .image img {
+  max-width: 100%;
+}

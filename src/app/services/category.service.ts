@@ -1,28 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
 
-import { Product } from '../models/product'
+import { Category } from '../models/Category'
 
 @Injectable()
-export class ProductService {
-  private url = 'http://localhost:3000/'
+export class CategoryService {
+  private url = 'http://localhost:3000/category'
 
   constructor(private http: Http) { }
 
-  getProducts(): Observable<Product[]> {
-    // let headers = new Headers();
-    // headers.append('Content-Type', 'application/json');
-    return this.http.get(this.url + 'products')
+  getCategories(): Observable<Category[]> {
+    return this.http.get(this.url)
                     .map(res => res.json())
                     .catch(this.handleError);
   }
 
-
-  getProduct(id: number): Observable<Product> {
-    return this.http.get(this.url + 'product-detail/' + id)
+  getCategory(id: number): Observable<Category> {
+    return this.http.get(this.url + '/' + id)
                     .map(res => res.json())
                     .catch(this.handleError);
   }
@@ -38,7 +33,7 @@ export class ProductService {
       errMsg = error.message ? error.message : error.toString();
     }
 
-    console.error("ERROR: ", errMsg);
     return Observable.throw(errMsg);
   }
+
 }

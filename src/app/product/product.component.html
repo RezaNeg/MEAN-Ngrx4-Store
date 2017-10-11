@@ -10,7 +10,10 @@
     <div class="price">{{ product.price }} SEK</div>
 
     <div>
-      <button>Add to cart</button>
+      <button (click)="addToCart()" class="button add-to-cart">
+        <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
+        Add to cart
+      </button>
     </div>
 
   </div>
