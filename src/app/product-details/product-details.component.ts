@@ -6,8 +6,11 @@ import 'rxjs/add/operator/switchMap';
 
 import { ProductService } from '../services/product.service';
 import { CartService } from '../services/cart.service';
+import { CategoryService } from '../services/category.service';
 
 import { Product } from '../models/product';
+import { Category }from '../models/category';
+
 
 
 @Component({
@@ -17,13 +20,15 @@ import { Product } from '../models/product';
 })
 export class ProductDetailsComponent implements OnInit {
   @Input() product: Product;
+  public category: Category;
 
   constructor(
     private productService: ProductService,
     private cartService: CartService,
     private route: ActivatedRoute,
     private toastr: ToastsManager,
-    private location: Location
+    private location: Location,
+    private categoryService: CategoryService
   ) { }
 
   ngOnInit() {
@@ -34,7 +39,9 @@ export class ProductDetailsComponent implements OnInit {
               if (data){
                 console.log("DATA for details: ", data)
                   this.product = data['product'];
-                  
+                  console.log ("PROD: ", this.product)
+                  // Load the category
+                  this.getProductCategory(this.product.cat_id);
                   }
           });
   })
@@ -49,7 +56,19 @@ export class ProductDetailsComponent implements OnInit {
 
   addToCart(): void {
     this.cartService.add(this.product);
-    this.toastr.success('The product was added to your cart', 'Added!');
+    this.toastr.success('is added to your cart', this.product.name +'!');
+  }
+
+  getProductCategory(id: number): void {
+    console.log("ID for param: ", id);
+    if (this.category == null && id !== null) {
+      this.categoryService.getCategory(id)
+        .subscribe(data => {
+          this.category = data['category']
+          console.log("DATA for CAT: ", data['category'])
+          });
+        
+    }
   }
 
 }

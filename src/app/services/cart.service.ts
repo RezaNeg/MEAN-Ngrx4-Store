@@ -5,6 +5,7 @@ import { Cart } from '../models/cart';
 @Injectable()
 export class CartService {
   private items: Cart[] = [];
+  public totalPrice: number
 
   constructor() { }
 
@@ -39,9 +40,10 @@ export class CartService {
   }
 
   getTotalPrice(): number {
-    return this.items.reduce((sum, item) => {
+    this.totalPrice = this.items.reduce((sum, item) => {
       return sum + item.product.price;
     }, 0);
+    return Number(this.totalPrice.toFixed(2));
   }
 
   getItem(product: Product): Cart {

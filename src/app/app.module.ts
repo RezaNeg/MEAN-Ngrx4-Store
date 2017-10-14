@@ -22,6 +22,10 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { CartComponent } from './cart/cart.component';
+import { CategoryListComponent } from './category-list/category-list.component';
+import { ContactFormComponent } from './contact-form/contact-form.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { CheckoutItemsComponent } from './checkout-items/checkout-items.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +37,11 @@ import { CartComponent } from './cart/cart.component';
     HomeComponent,
     AboutComponent,
     ContactComponent,
-    CartComponent
+    CartComponent,
+    CategoryListComponent,
+    ContactFormComponent,
+    CheckoutComponent,
+    CheckoutItemsComponent
   ],
   imports: [
     AppRoutingModule,

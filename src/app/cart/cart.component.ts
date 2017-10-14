@@ -29,11 +29,11 @@ export class CartComponent implements OnInit {
     this.products = this.cartService.getItems();
   }
 
-  removeItem(cartProduct: Cart): void {
-    this.cartService.delete(cartProduct.product);
+  removeItem(cart: Cart): void {
+    this.cartService.delete(cart.product);
     this.products = this.cartService.getItems();
 
-    this.toastr.success('Product was removed from your cart', 'Success');
+    this.toastr.success('is removed from your cart', cart.product.name + ',');
   }
 
 }

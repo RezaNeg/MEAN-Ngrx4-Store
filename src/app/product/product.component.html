@@ -1,13 +1,13 @@
 <div class="product-item row">
   <div class="image col-md-6">
 
-    <!-- <img src="https://www.thegoodguys.com.au/wcsstore/TGGCAS/idcplg?IdcService=GET_FILE&RevisionSelectionMethod=LatestReleased&noSaveAs=1&dDocName=50035069_478516&Rendition=ZOOMIMAGE" alt=""> -->
+    <img [src]="product.src" alt="">
 
   </div>
 
   <div class="information col-md-6">
     <h3><a [routerLink]="['/product-detail', product.id]">{{ product.name }}</a></h3>
-    <div class="price">{{ product.price }} SEK</div>
+    <div class="price">${{ product.price }}</div>
 
     <div>
       <button (click)="addToCart()" class="button add-to-cart">

@@ -1,0 +1,57 @@
+<table class="table checkout-items">
+    
+      <thead>
+        <tr>
+          <th></th>
+          <th>Product</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+    
+      <tbody>
+        <tr *ngFor="let item of items">
+    
+          <td class="image-column">
+            <a [routerLink]="['/product', item.product.id]">
+              <img [src]="item.product.src" width="100" height="100" alt="Image" />
+            </a>
+          </td>
+    
+          <td class="product-column">
+            <a [routerLink]="['/product', item.product.id]">{{ item.product.name }}</a>
+          </td>
+    
+          <td class="subtotal-column price">
+            ${{ item.quantity * item.product.price }}
+          </td>
+    
+        </tr>
+      </tbody>
+    
+      <tfoot>
+    
+        <tr>
+          <td colspan="2" class="total-heading">Subtotal</td>
+          <td>
+            <span class="price">${{ subtotal }}</span>
+          </td>
+        </tr>
+    
+        <tr>
+          <td colspan="2" class="total-heading">Shipping</td>
+          <td>
+            <span class="price">${{ shippingCost }}</span>
+          </td>
+        </tr>
+    
+        <tr>
+          <td colspan="2" class="total-heading">Grand total</td>
+          <td>
+            <span class="price">${{ grandTotal }}</span>
+          </td>
+        </tr>
+    
+      </tfoot>
+    
+    </table>
+    

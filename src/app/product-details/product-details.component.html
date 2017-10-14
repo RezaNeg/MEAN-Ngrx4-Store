@@ -7,13 +7,13 @@
     
         <div class="right-info col-md-6">
           <h1>{{ product.name }}</h1>
-    
+          <h3 *ngIf="category">Category: {{ category.name }}</h3>
           <ul>
             <li>In stock. Ships within 1-2 days</li>
             <li>Free Shipping</li>
             <li>Guarantee</li>
           </ul>
-    
+          
           <div class="price">${{ product.price }}</div>
     
           <button (click)="addToCart()" class="button add-to-cart">

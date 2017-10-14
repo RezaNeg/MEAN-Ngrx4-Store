@@ -1,0 +1,83 @@
+<div class="checkout row">
+    
+      <div class="col-md-4">
+    
+        <div class="box">
+          <div class="title">
+            <i class="fa fa-home"></i>
+            Billing Address
+          </div>
+    
+          <div class="content">
+            <form class="form">
+              <div class="field">
+                <label for="firstname">Firstname</label>
+                <input type="text" name="firstname" placeholder="First name" id="firstname">
+              </div>
+    
+              <div class="field">
+                <label for="lastname">Last name</label>
+                <input type="text" name="lastname" placeholder="Last name" id="lastname">
+              </div>
+    
+            </form>
+          </div>
+    
+        </div>
+    
+      </div>
+    
+      <div class="col-md-8">
+    
+        <div class="row">
+    
+          <div class="col-md-6">
+            <div class="box">
+              <div class="title">
+                <i class="fa fa-truck"></i> Shipping Method
+              </div>
+              <div class="content">
+                <button class="button" (click)="setShippingCost(10)">Express</button>
+              </div>
+            </div>
+          </div>
+    
+          <div class="col-md-6">
+            <div class="box">
+              <div class="title">
+                <i class="fa fa-credit-card"></i> Payment Method
+              </div>
+              <div class="content">Content</div>
+            </div>
+          </div>
+    
+        </div>
+    
+        <div>
+          <div class="box">
+            <div class="title">
+              <i class="fa fa-check-square"></i> Order review
+            </div>
+            <div class="content">
+    
+              <app-checkout-items
+                *ngIf="cart"
+                [items]="cart"
+                [subtotal]="subtotal"
+                [shippingCost]="selectedShippingCost"
+                [grandTotal]="subtotal + selectedShippingCost">
+              </app-checkout-items>
+    
+              <div *ngIf="!cart">
+                <p>You have no items in your cart</p>
+              </div>
+    
+            </div>
+          </div>
+        </div>
+    
+    
+      </div>
+    
+    </div>
+    

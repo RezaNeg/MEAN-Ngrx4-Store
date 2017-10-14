@@ -1,0 +1,20 @@
+.checkout-items .image-column {
+    width: 20%;
+  }
+  .checkout-items .product-column {
+    font-size: 1.2em;
+  }
+  .checkout-items tbody tr:last-child td {
+    padding-bottom: 20px;
+    border-bottom: #ccc 1px solid;
+  }
+  .checkout-items tbody tr:first-child td {
+    padding-top: 20px;
+  }
+  .checkout-items tfoot tr:first-child td {
+    padding-top: 40px;
+  }
+  .checkout-items .total-heading {
+    text-align: right;
+  }
+  

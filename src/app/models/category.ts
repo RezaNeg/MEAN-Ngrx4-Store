@@ -1,7 +1,7 @@
 export class Category {
-    id: number;
-    name: String;
-    image: String;
+    id?: number;
+    name?: String;
+    image?: String;
   
     constructor(category: any) {
       this.id = category.id;

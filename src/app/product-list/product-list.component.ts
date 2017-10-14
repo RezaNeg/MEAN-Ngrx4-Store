@@ -22,7 +22,7 @@ export class ProductListComponent implements OnInit {
       .subscribe(
         data => {
           this.products = data['products']
-        console.log("DATA from server: ", data)
+        console.log("DATA from server: ", data['products'])
         error => this.errorMessage = <any>error
         });
       
