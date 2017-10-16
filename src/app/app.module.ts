@@ -13,6 +13,8 @@ import { AppComponent } from './app.component';
 import { ProductService } from './services/product.service';
 import { CartService } from './services/cart.service';
 import { CategoryService } from './services/category.service';
+import { CheckoutService } from './services/checkout.service';
+import { CustomerService } from './services/customer.service';
 
 import { UserComponent } from './user/user.component';
 import { ProductListComponent } from './product-list/product-list.component';
@@ -56,6 +58,8 @@ import { CheckoutItemsComponent } from './checkout-items/checkout-items.componen
     ProductService,
     CartService,
     CategoryService,
+    CustomerService,
+    CheckoutService
   ],
   bootstrap: [AppComponent]
 })

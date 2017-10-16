@@ -1,83 +1,154 @@
-<div class="checkout row">
+<div class="checkout">
     
-      <div class="col-md-4">
-    
-        <div class="box">
-          <div class="title">
-            <i class="fa fa-home"></i>
-            Billing Address
-          </div>
-    
-          <div class="content">
-            <form class="form">
-              <div class="field">
-                <label for="firstname">Firstname</label>
-                <input type="text" name="firstname" placeholder="First name" id="firstname">
-              </div>
-    
-              <div class="field">
-                <label for="lastname">Last name</label>
-                <input type="text" name="lastname" placeholder="Last name" id="lastname">
-              </div>
-    
-            </form>
-          </div>
-    
-        </div>
-    
-      </div>
-    
-      <div class="col-md-8">
+      <form class="form" (ngSubmit)="onSubmit()" #checkoutForm="ngForm">
     
         <div class="row">
     
-          <div class="col-md-6">
+          <div class="col-md-4">
+    
             <div class="box">
               <div class="title">
-                <i class="fa fa-truck"></i> Shipping Method
+                <i class="fa fa-home"></i>
+                Billing Address
               </div>
+    
               <div class="content">
-                <button class="button" (click)="setShippingCost(10)">Express</button>
+    
+                <div class="row">
+    
+                  <div class="field col-md-6">
+                    <label for="firstname">Firstname</label>
+                    <input type="text" name="firstname" placeholder="First name" id="firstname" [(ngModel)]="form.firstname">
+                  </div>
+    
+                  <div class="field col-md-6">
+                    <label for="lastname">Last name</label>
+                    <input type="text" name="lastname" placeholder="Last name" id="lastname" [(ngModel)]="form.lastname">
+                  </div>
+    
+                  <div class="field col-md-12">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" placeholder="your@email.com" id="email" [(ngModel)]="form.email">
+                  </div>
+    
+                  <div class="field col-md-12">
+                    <label for="address">Address</label>
+                    <input type="address" name="address" placeholder="Address" id="address" [(ngModel)]="form.address">
+                  </div>
+    
+                  <div class="field col-md-12">
+                    <label for="country">Country</label>
+                    <input type="country" name="country" placeholder="Country" id="country" [(ngModel)]="form.country">
+                  </div>
+    
+                  <div class="field col-md-6">
+                    <label for="postcode">Postal Code</label>
+                    <input type="postcode" name="postcode" placeholder="Postal Code" id="postcode" [(ngModel)]="form.postcode">
+                  </div>
+    
+                  <div class="field col-md-6">
+                    <label for="city">City</label>
+                    <input type="city" name="city" placeholder="City" id="city" [(ngModel)]="form.city">
+                  </div>
+    
+                  <div class="field col-md-12">
+                    <label for="phone">Telephone</label>
+                    <input type="phone" name="phone" placeholder="Telephone" id="phone" [(ngModel)]="form.phone">
+                  </div>
+    
+                </div>
+    
               </div>
+    
             </div>
+    
           </div>
     
-          <div class="col-md-6">
-            <div class="box">
-              <div class="title">
-                <i class="fa fa-credit-card"></i> Payment Method
-              </div>
-              <div class="content">Content</div>
-            </div>
-          </div>
+          <div class="col-md-8"> <!-- .col-md-8 -->
     
-        </div>
+            <div class="row"> <!-- .row -->
     
-        <div>
-          <div class="box">
-            <div class="title">
-              <i class="fa fa-check-square"></i> Order review
-            </div>
-            <div class="content">
-    
-              <app-checkout-items
-                *ngIf="cart"
-                [items]="cart"
-                [subtotal]="subtotal"
-                [shippingCost]="selectedShippingCost"
-                [grandTotal]="subtotal + selectedShippingCost">
-              </app-checkout-items>
-    
-              <div *ngIf="!cart">
-                <p>You have no items in your cart</p>
+              <div class="col-md-6">
+                <div class="box">
+                  <div class="title">
+                    <i class="fa fa-truck"></i> Shipping Method
+                  </div>
+                  <div class="content">
+                    <button class="button" (click)="setShippingCost(10)">Express</button>
+                  </div>
+                </div>
               </div>
     
+              <div class="col-md-6">
+                <div class="box">
+                  <div class="title">
+                    <i class="fa fa-credit-card"></i> Payment Method
+                  </div>
+                  <div class="content">
+    
+                    <img src="/assets/img/paypal.png" alt="Paypal">
+    
+                  </div>
+                </div>
+              </div>
+    
+            </div> <!-- /.row -->
+    
+            <div>
+              <div class="box">
+                <div class="title">
+                  <i class="fa fa-check-square"></i> Order review
+                </div>
+                <div class="content">
+    
+                  <app-checkout-items
+                    *ngIf="cart"
+                    [items]="cart"
+                    [subtotal]="subtotal"
+                    [shippingCost]="selectedShippingCost"
+                    [grandTotal]="subtotal + selectedShippingCost">
+                  </app-checkout-items>
+    
+                  <div *ngIf="!cart">
+                    <p>You have no items in your cart</p>
+                  </div>
+    
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+    
+            <div class="row"> <!-- .row -->
+    
+              <div class="col-md-6"> <!-- .col-md-6 -->
+    
+                <div class="box">
+    
+                  <div class="title small">Comments</div>
+    
+                  <div class="content">
+    
+                    <textarea name="comments" class="input" cols="30" rows="10"></textarea>
+    
+                  </div>
+    
+                </div>
+    
+              </div> <!-- /.col-md-6 -->
+    
+              <div class="col-md-6"> <!-- .col-md-6 -->
+    
+                <button class="button" type="submit">Place Order</button>
+    
+              </div> <!-- /.col-md-6 -->
+    
+            </div> <!-- /.row -->
     
     
-      </div>
+          </div> <!-- /.col-md-8 -->
+    
+        </div> <!-- ./row -->
+    
+      </form>
     
     </div>
     
