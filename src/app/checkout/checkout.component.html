@@ -74,7 +74,15 @@
                     <i class="fa fa-truck"></i> Shipping Method
                   </div>
                   <div class="content">
-                    <button class="button" (click)="setShippingCost(10)">Express</button>
+                      <div *ngIf="!shippingMethod" class="message info">
+                          No shipping types available, please contact administrators.
+                        </div>
+        
+                        <div *ngIf="shippingMethod">
+        
+                          <button class="button" type="button" *ngFor="let type of shippingMethod" (click)="setSelectedShippingMethod(type)">{{ type.name }}</button>
+        
+                        </div>
                   </div>
                 </div>
               </div>

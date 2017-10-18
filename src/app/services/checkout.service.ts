@@ -3,6 +3,7 @@ import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Customer } from '../models/customer';
 import { Cart } from '../models/cart';
+import { Order } from '../models/order';
 
 @Injectable()
 export class CheckoutService {
@@ -11,7 +12,7 @@ export class CheckoutService {
 
   constructor(private http: Http) { }
 
-  createOrder(customer_id, total: any) {
+  createOrder(customer_id, total) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
@@ -21,6 +22,12 @@ export class CheckoutService {
     });
 
     return this.http.post(this.url, body, options)
+      .map((res: Response) => res.json())
+      .catch((err: any) => Observable.throw(err.json().error));
+  }
+
+  getOrder(id: String): Observable<Order> {
+    return this.http.get(this.url + '/' + id)
       .map((res: Response) => res.json())
       .catch((err: any) => Observable.throw(err.json().error));
   }

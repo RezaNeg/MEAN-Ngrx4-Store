@@ -1,3 +1,4 @@
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +16,7 @@ import { CartService } from './services/cart.service';
 import { CategoryService } from './services/category.service';
 import { CheckoutService } from './services/checkout.service';
 import { CustomerService } from './services/customer.service';
+import { ShippingService } from './services/shipping.service';
 
 import { UserComponent } from './user/user.component';
 import { ProductListComponent } from './product-list/product-list.component';
@@ -28,6 +30,7 @@ import { CategoryListComponent } from './category-list/category-list.component';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { CheckoutItemsComponent } from './checkout-items/checkout-items.component';
+import { OrderComponent } from './order/order.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +46,8 @@ import { CheckoutItemsComponent } from './checkout-items/checkout-items.componen
     CategoryListComponent,
     ContactFormComponent,
     CheckoutComponent,
-    CheckoutItemsComponent
+    CheckoutItemsComponent,
+    OrderComponent
   ],
   imports: [
     AppRoutingModule,
@@ -59,7 +63,8 @@ import { CheckoutItemsComponent } from './checkout-items/checkout-items.componen
     CartService,
     CategoryService,
     CustomerService,
-    CheckoutService
+    CheckoutService,
+    ShippingService
   ],
   bootstrap: [AppComponent]
 })

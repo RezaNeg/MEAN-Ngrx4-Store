@@ -1,0 +1,80 @@
+<div class="order">
+  
+    <div class="message negative" *ngIf="!order">
+      Oops.. This order was not found.
+    </div>
+  
+    <div *ngIf="order">
+      <h1>Order: {{ order.id }}</h1>
+  
+      <table>
+        <tr>
+          <td>Ordernumber:</td>
+          <td>{{ order.id }}</td>
+        </tr>
+        <tr>
+          <td>Date created</td>
+          <td>{{ order.createdAt | date:'short' }}</td>
+        </tr>
+        <tr>
+          <td>Status</td>
+          <td>
+            <div [ngSwitch]="order.status">
+              <span *ngSwitchCase="ShippingStatus.Pending">Pending</span>
+              <span *ngSwitchCase="ShippingStatus.AwaitingShipment">Awaiting Shipment</span>
+              <span *ngSwitchCase="ShippingStatus.Shipped">Shipped</span>
+              <span *ngSwitchCase="ShippingStatus.Completed">Completed</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Payment method</td>
+          <td>[payment method]</td>
+        </tr>
+        <tr>
+          <td>Invoice</td>
+          <td>[invoice]</td>
+        </tr>
+      </table>
+  
+      <div class="customer-info row"> <!-- .row -->
+  
+        <div class="col-md-6 col-xs-12"> <!-- .col -->
+          <h4>Customer</h4>
+          {{ order.user_id }}
+        </div> <!-- /.col -->
+  
+        <!-- <div class="col-md-6 col-xs-12" *ngIf="order.shipping"> .col -->
+          <!-- <h4>Shipping method</h4>
+          {{ order.shipping.name }} <br/>
+          {{ order.customer.firstname }} {{ order.customer.lastname }} <br/>
+          {{ order.customer.address }} <br/>
+          {{ order.customer.postnumber }} {{ order.customer.city }} -->
+        <!-- </div> /.col -->
+  
+      </div> <!-- ./row -->
+  
+      <div *ngIf="order.status == ShippingStatus.Shipped">
+        <!-- TODO: if shipped display message -->
+        <div class="message info">
+          <p>The shipment is sent to you and your tracking number is: <i class="fa fa-truck"></i> [trackingnumber]</p>
+          <p>Please note that the tracking number may not be available yet. It may take a few hours before you can track it.</p>
+        </div>
+      </div>
+  
+      <!-- <app-checkout-items
+        [items]="order.items"
+        [shipping]="order.shipping"
+        [subtotal]="order.calculateSubTotal()"
+        [grandTotal]="order.total">
+      </app-checkout-items> -->
+      <app-checkout-items
+      [items]="order.items"
+      [subtotal]="order.calculateSubTotal()"
+      [grandTotal]="order.total">
+    </app-checkout-items>
+
+    </div>
+  
+  </div>
+  

@@ -4,10 +4,13 @@ import { Observable } from 'rxjs/rx';
 import { Cart } from '../models/cart';
 import { Customer } from '../models/customer';
 import { Product } from '../models/product';
+import { ShippingMethod } from './../models/shipping-method';
+import { OrderLine } from './../models/order-line';
 
 import { CartService } from '../services/cart.service';
 import { CheckoutService } from '../services/checkout.service';
 import { CustomerService } from '../services/customer.service';
+import { ShippingService } from '../services/shipping.service';
 
 @Component({
   selector: 'app-checkout',
@@ -17,20 +20,23 @@ import { CustomerService } from '../services/customer.service';
 export class CheckoutComponent implements OnInit {
 
   cart: Cart[];
-  private selectedShippingCost: number = 0;
+  private shippingMethod : ShippingMethod[];
+  private selectedShippingMethod: ShippingMethod;
   private subtotal: number = 0;
   private form = {};
-  private temp: any;
 
   constructor(
     private cartService: CartService,
     private checkoutService: CheckoutService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private shippingService: ShippingService
   ) { }
 
   ngOnInit() {
     this.loadcart();
+    this.loadShippingMethod();
     this.calculateSubTotal();
+    console.log("SHIPPING METHODS: ", this.shippingMethod)
   }
   onSubmit() {
     // TODO: fields should be fetched from the form instead of hardcoded
@@ -42,14 +48,6 @@ export class CheckoutComponent implements OnInit {
       lastname: "lastname",
       firstname: "firstname",
     }
-
-  //   ngOnInit() {
-  //     this.userService.getUser()
-  //         .do(u => this.user = u) //.do just invokes the function. does not manipulate the stream, return value is ignored.
-  //         .flatMap(u => this.userService.getPreferences(u.username))
-  //         .subscribe(p => this.preferences = p);
-  // }
-
   
     this.customerService.create(inputCustomer).map(res => 
       this.checkoutService.createOrder(
@@ -59,15 +57,6 @@ export class CheckoutComponent implements OnInit {
           console.log(data.subscribe(x => console.log(x)));
     });
 
-    // this.customerService.create(inputCustomer).map(res => 
-    //   this.checkoutService.createOrder(
-    //     res.data,
-    //     this.cart,
-    //     this.total())
-
-    // ).subscribe(data => {
-    //   console.log(data);
-    // });
   }
 
   loadcart(): void {
@@ -86,17 +75,22 @@ export class CheckoutComponent implements OnInit {
     return this.cartService.getTotalPrice();
   }
 
-  getTotalWithShipping(): number {
-    return this.total() + this.selectedShippingCost;
-  }
-
   calculateSubTotal(): number {
     this.subtotal = this.cartService.getTotalPrice();
     return this.subtotal;
   }
 
-  setShippingCost(price: number) {
-    this.selectedShippingCost = price;
+  loadShippingMethod(): void {
+    this.shippingService.getAllShipping()
+      .subscribe(data => {
+        this.shippingMethod = data["shipping_methods"]
+        // console.log("Shipping methods from server: ", data)
+      });
+      
+  }
+  
+  getShippingMethod(): ShippingMethod[] {
+    return this.shippingMethod;
   }
 
 }

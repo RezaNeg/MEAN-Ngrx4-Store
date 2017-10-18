@@ -1,5 +1,5 @@
 export interface Customer {
-    _id?: String;
+    id?: String;
     firstname: String;
     lastname: String;
     address: String;
