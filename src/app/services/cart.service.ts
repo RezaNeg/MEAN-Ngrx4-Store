@@ -41,7 +41,8 @@ export class CartService {
 
   getTotalPrice(): number {
     this.totalPrice = this.items.reduce((sum, item) => {
-      return sum + item.product.price;
+      // console.log("CART ITEM: ", this.items)
+      return sum + item.product.price * item.quantity;
     }, 0);
     return Number(this.totalPrice.toFixed(2));
   }

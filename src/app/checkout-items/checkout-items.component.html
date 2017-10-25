@@ -12,13 +12,13 @@
         <tr *ngFor="let item of items">
     
           <td class="image-column">
-            <a [routerLink]="['/product', item.product.id]">
+            <a [routerLink]="['/product-detail/', item.product.id]">
               <img [src]="item.product.src" width="100" height="100" alt="Image" />
             </a>
           </td>
     
           <td class="product-column">
-            <a [routerLink]="['/product', item.product.id]">{{ item.product.name }}</a>
+            <a [routerLink]="['/product-detail/', item.product.id]">{{ item.product.name }}</a>
           </td>
     
           <td class="subtotal-column price">

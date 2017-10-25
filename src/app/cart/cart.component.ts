@@ -33,7 +33,7 @@ export class CartComponent implements OnInit {
     this.cartService.delete(cart.product);
     this.products = this.cartService.getItems();
 
-    this.toastr.success('is removed from your cart', cart.product.name + ' ');
+    this.toastr.success('is removed from your cart', cart.product.name + ' ', {toastLife: 1000});
   }
 
 }

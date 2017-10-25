@@ -110,15 +110,15 @@
                 <div class="content">
     
                   <app-checkout-items
-                    *ngIf="cart"
+                    *ngIf="cart.length"
                     [items]="cart"
                     [subtotal]="subtotal"
-                    [shippingCost]="selectedShippingCost"
-                    [grandTotal]="subtotal + selectedShippingCost">
+                    [shippingCost]="(selectedShippingMethod ? selectedShippingMethod.price : 0)"
+                    [grandTotal]="subtotal + (selectedShippingMethod ? selectedShippingMethod.price : 0)*100/100">
                   </app-checkout-items>
     
-                  <div *ngIf="!cart">
-                    <p>You have no items in your cart</p>
+                  <div *ngIf="!cart.length">
+                    <p class="danger blink">You have no items in your cart!</p>
                   </div>
     
                 </div>

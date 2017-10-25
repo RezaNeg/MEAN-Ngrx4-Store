@@ -36,7 +36,7 @@ export class CheckoutComponent implements OnInit {
     this.loadcart();
     this.loadShippingMethod();
     this.calculateSubTotal();
-    console.log("SHIPPING METHODS: ", this.shippingMethod)
+
   }
   onSubmit() {
     // TODO: fields should be fetched from the form instead of hardcoded
@@ -77,6 +77,7 @@ export class CheckoutComponent implements OnInit {
 
   calculateSubTotal(): number {
     this.subtotal = this.cartService.getTotalPrice();
+    console.log("SUBTOT: ", this.subtotal)
     return this.subtotal;
   }
 
@@ -84,13 +85,20 @@ export class CheckoutComponent implements OnInit {
     this.shippingService.getAllShipping()
       .subscribe(data => {
         this.shippingMethod = data["shipping_methods"]
-        // console.log("Shipping methods from server: ", data)
+        this.selectedShippingMethod = this.shippingMethod[0]
+        console.log("Selected SHIPPING METHOD: ", this.selectedShippingMethod)
+        console.log("Shipping methods from server: ", data["shipping_methods"])
       });
       
   }
   
   getShippingMethod(): ShippingMethod[] {
     return this.shippingMethod;
+  }
+
+  setSelectedShippingMethod(shipping: ShippingMethod) {
+    console.log("SHIPPING: ", shipping)
+    this.selectedShippingMethod = shipping;
   }
 
 }
