@@ -1,6 +1,6 @@
 <div class="checkout">
     
-      <form class="form" (ngSubmit)="onSubmit()" #checkoutForm="ngForm">
+      <form class="form" (ngSubmit)="onCheckoutSubmit(checkoutForm)" #checkoutForm="ngForm">
     
         <div class="row">
     
@@ -17,23 +17,18 @@
                 <div class="row">
     
                   <div class="field col-md-6">
-                    <label for="firstname">Firstname</label>
-                    <input type="text" name="firstname" placeholder="First name" id="firstname" [(ngModel)]="form.firstname">
+                    <label for="street">Street</label>
+                    <input type="text" name="street" placeholder="Street" id="street" [(ngModel)]="form.street">
                   </div>
     
                   <div class="field col-md-6">
-                    <label for="lastname">Last name</label>
-                    <input type="text" name="lastname" placeholder="Last name" id="lastname" [(ngModel)]="form.lastname">
+                    <label for="city">City</label>
+                    <input type="text" name="city" placeholder="City" id="city" [(ngModel)]="form.city">
                   </div>
     
                   <div class="field col-md-12">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" placeholder="your@email.com" id="email" [(ngModel)]="form.email">
-                  </div>
-    
-                  <div class="field col-md-12">
-                    <label for="address">Address</label>
-                    <input type="address" name="address" placeholder="Address" id="address" [(ngModel)]="form.address">
+                    <label for="state">State</label>
+                    <input type="text" name="state" placeholder="State" id="state" [(ngModel)]="form.state">
                   </div>
     
                   <div class="field col-md-12">
@@ -42,13 +37,8 @@
                   </div>
     
                   <div class="field col-md-6">
-                    <label for="postcode">Postal Code</label>
-                    <input type="postcode" name="postcode" placeholder="Postal Code" id="postcode" [(ngModel)]="form.postcode">
-                  </div>
-    
-                  <div class="field col-md-6">
-                    <label for="city">City</label>
-                    <input type="city" name="city" placeholder="City" id="city" [(ngModel)]="form.city">
+                    <label for="zip">Zip</label>
+                    <input type="postcode" name="zip" placeholder="ZIP" id="zip" [(ngModel)]="form.zip">
                   </div>
     
                   <div class="field col-md-12">
@@ -118,7 +108,7 @@
                   </app-checkout-items>
     
                   <div *ngIf="!cart.length">
-                    <p class="danger blink">You have no items in your cart!</p>
+                    <p class="danger blink">You have no item in your cart!</p>
                   </div>
     
                 </div>

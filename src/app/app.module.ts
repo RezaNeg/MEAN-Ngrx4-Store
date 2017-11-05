@@ -20,6 +20,7 @@ import { ShippingService } from './services/shipping.service';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { AuthGuard } from './guards/auth.guard';
+import { AddressService } from './services/address.service';
 
 import { UserComponent } from './user/user.component';
 import { ProductListComponent } from './product-list/product-list.component';
@@ -36,6 +37,7 @@ import { CheckoutItemsComponent } from './checkout-items/checkout-items.componen
 import { OrderComponent } from './order/order.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,8 @@ import { ProfileComponent } from './profile/profile.component';
     CheckoutItemsComponent,
     OrderComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    RegisterComponent
   ],
   imports: [
     AppRoutingModule,
@@ -74,7 +77,8 @@ import { ProfileComponent } from './profile/profile.component';
     ShippingService,
     AuthService,
     UserService,
-    AuthGuard
+    AuthGuard,
+    AddressService
   ],
   bootstrap: [AppComponent]
 })

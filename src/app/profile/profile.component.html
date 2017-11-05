@@ -1,6 +1,7 @@
 <div class="profile">
-  <div class="message negative" *ngIf="!user">User not found</div>
-
+    <!-- <div class="message negative" *ngIf="!user">User not found</div> -->
+    <!-- <div class="message negative" *ngIf="!user">User not found</div> -->
+    
   <div *ngIf="user">
     <h1>Welcome back, {{ user.username }}</h1>
 
@@ -15,7 +16,7 @@
         <table class="table" *ngIf="user.customer.orders">
           <thead>
             <tr>
-              <th>Ordernr</th>
+              <th>OrderNr</th>
               <th>Status</th>
               <th>Date</th>
               <th>Total</th>

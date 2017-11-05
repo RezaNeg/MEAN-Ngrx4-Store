@@ -1,3 +1,4 @@
+import { ShippingMethod } from './../models/shipping-method';
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -12,13 +13,14 @@ export class CheckoutService {
 
   constructor(private http: Http) { }
 
-  createOrder(customer_id, total) {
+  createOrder(user_id, total, shippingMethodId) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
     let body = JSON.stringify({
-      user_id: customer_id,
-      total: total
+      user_id: user_id,
+      total: total,
+      shipping_method_id : shippingMethodId
     });
 
     return this.http.post(this.url, body, options)

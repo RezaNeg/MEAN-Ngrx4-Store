@@ -1,20 +1,21 @@
-<div class="product-item row">
-  <div class="image col-md-6">
-
-    <img [src]="product.src" alt="">
-
-  </div>
-
-  <div class="information col-md-6">
-    <h3><a [routerLink]="['/product-detail', product.id]">{{ product.name }}</a></h3>
+  
+  <div class="image price">  
     <div class="price">${{ product.price }}</div>
+    <img class="group list-group-image prettyPhoto" [routerLink]="['/product-detail', product.id]" [src]="product.src" [alt]="product.name"/>
+  </div>
+  <div class="caption">
+      <div class="title">
+        <h3 class="name"><a [routerLink]="['/product-detail', product.id]">{{ product.name }}</a></h3>
 
+      </div>
     <div>
-      <button (click)="addToCart()" class="button add-to-cart">
+      <div class="button">
+        <button (click)="addToCart()" class="btn">
         <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
         Add to cart
-      </button>
+        </button>
     </div>
 
   </div>
 </div>
+         

@@ -27,9 +27,10 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     this.userService.localLogin(this.loginForm.email, this.loginForm.password)
       .subscribe(data => {
+        console.log("DATA after login from NODE: ", data)
         if (data.success) {
           this.router.navigate(['/profile']);
-          console.log("Welcome : ", data.user)
+          console.log("Welcome : ", data.user.firstname)
         }
         else {
           this.toastr.error(data.msg, "Invalid credentials");

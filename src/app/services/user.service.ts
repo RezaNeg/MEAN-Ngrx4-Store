@@ -87,15 +87,24 @@ export class UserService {
   }
 
   getProfile(): Observable<any>{
-	let token = this.loadToken();
-    let getProfile$ = this.authService.getProfile(token);
-    getProfile$.subscribe(data => {
-		this.storeUserData(data.user, token);
-        console.log("profile got from profile method: ", data);
-        console.log("profile written to currentUser: ", this.currentUser);
-    });
-    return getProfile$;
-  }
+    if (!this.isLoggedIn()){
+      return null;
+    }
+    let token = this.loadToken();
+    return this.authService.getProfile(token);
+    }
+
+  // getProfile(): User{
+	// let token = this.loadToken();
+  //   let getProfile$ = this.authService.getProfile(token);
+  //   getProfile$.subscribe(data => {
+	// 	this.storeUserData(data.user, token);
+  //       console.log("profile got from profile method: ", data);
+  //       console.log("profile written to currentUser: ", this.currentUser);
+  //       return data.user;
+  //   });
+  //   return;
+  // }
 
 	getImageURL(): string{
 		return this.profileImage = 

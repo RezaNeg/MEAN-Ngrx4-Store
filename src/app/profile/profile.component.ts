@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
 import { User } from '../models/user';
 import { ShippingStatus } from '../models/shipping-status';
 
@@ -15,14 +15,26 @@ export class ProfileComponent implements OnInit {
 
   private user: User
   private ShippingStatus: typeof ShippingStatus = ShippingStatus;
+  private isFinished: boolean = false;
 
   constructor(
-    private authService: AuthService,
+    private userService: UserService,
     private router: Router
   ) { }
 
   ngOnInit() {
-    this.setUser(this.authService.getAuthedUser());
+
+    
+    this.userService.getProfile()
+    .subscribe(
+      user => {
+        this.setUser(user);
+      },
+      error => console.log(error),
+      () => this.isFinished = true
+    );
+      
+    
   }
 
   private setUser(user: User): void {
@@ -30,7 +42,7 @@ export class ProfileComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
+    this.userService.logout();
     this.router.navigate(['/']);
   }
 

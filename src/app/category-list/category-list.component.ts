@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CategoryService } from '../services/category.service';
 
 import { Category } from '../models/Category';
@@ -9,6 +9,7 @@ import { Category } from '../models/Category';
   styleUrls: ['./category-list.component.css']
 })
 export class CategoryListComponent implements OnInit {
+  @Input() category: Category; 
   private errorMessage: string;
   private categories: Category[] = [];
 
@@ -24,7 +25,7 @@ export class CategoryListComponent implements OnInit {
 
   loadCategories(): void {
     this.categoryService.getCategories().subscribe(
-      categories => this.categories = categories,
+      categories => this.categories = categories['categories'],
       error => this.errorMessage = <any>error
     );
   }

@@ -1,16 +1,22 @@
+
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/rx';
+import { NgForm } from '@angular/forms';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+
 
 import { Cart } from '../models/cart';
-import { Customer } from '../models/customer';
+import { User } from '../models/user';
+import { Address } from '../models/address';
 import { Product } from '../models/product';
-import { ShippingMethod } from './../models/shipping-method';
-import { OrderLine } from './../models/order-line';
+import { ShippingMethod } from '../models/shipping-method';
+import { OrderLine } from '../models/order-line';
 
 import { CartService } from '../services/cart.service';
 import { CheckoutService } from '../services/checkout.service';
-import { CustomerService } from '../services/customer.service';
 import { ShippingService } from '../services/shipping.service';
+import { UserService } from './../services/user.service';
+import { AddressService } from './../services/address.service';
 
 @Component({
   selector: 'app-checkout',
@@ -24,39 +30,57 @@ export class CheckoutComponent implements OnInit {
   private selectedShippingMethod: ShippingMethod;
   private subtotal: number = 0;
   private form = {};
+  private user : User;
+  private isFinished = false;
+  private orderCreated = false;
+  private address : Address;
+
 
   constructor(
     private cartService: CartService,
     private checkoutService: CheckoutService,
-    private customerService: CustomerService,
-    private shippingService: ShippingService
+    private addressService: AddressService,
+    private shippingService: ShippingService,
+    private userService: UserService,
+    public toastr: ToastsManager
   ) { }
 
   ngOnInit() {
     this.loadcart();
     this.loadShippingMethod();
     this.calculateSubTotal();
+    this.loadUser();
 
   }
-  onSubmit() {
-    // TODO: fields should be fetched from the form instead of hardcoded
-    const inputCustomer: Customer = {
-      phone: "phone",
-      country: "country",
-      zip: "zip",
-      address: "address",
-      lastname: "lastname",
-      firstname: "firstname",
-    }
-  
-    this.customerService.create(inputCustomer).map(res => 
-      this.checkoutService.createOrder(
-        res.user_id,
-        this.total()))
-        .subscribe(data => {
-          console.log(data.subscribe(x => console.log(x)));
-    });
+  onCheckoutSubmit(checkoutForm: NgForm) {
+    if (this.user){
+      if (checkoutForm.valid) {
+        console.log('submitting...', checkoutForm);
+        const inputAddress: Address = {
+          street: checkoutForm.value.street,
+          city: checkoutForm.value.city,
+          state: checkoutForm.value.state,
+          country: checkoutForm.value.country,
+          zip: checkoutForm.value.zip,
+          phone: checkoutForm.value.phone,
+          user_id: this.user.id
+        }
+        console.log("THIS USER: ", this.user)
 
+        this.addressService.create(inputAddress)
+        .map(res => 
+          this.checkoutService.createOrder( this.user.id,
+                                            this.total(), 
+                                            this.selectedShippingMethod))
+            .subscribe(data => {console.log(data.subscribe(x => console.log(x)));
+              // then create orderlines in server database based on order_id and user_id
+        })
+      
+      }
+    }else{
+      this.toastr.error("You must login first!", "ERROR", { lifetime: 1 });
+      console.log("You must login first!")
+    }
   }
 
   loadcart(): void {
@@ -100,5 +124,22 @@ export class CheckoutComponent implements OnInit {
     console.log("SHIPPING: ", shipping)
     this.selectedShippingMethod = shipping;
   }
+
+  loadUser(): void {
+    if (!this.userService.isLoggedIn()) {
+      this.isFinished = true;
+      return null;
+    }
+    this.userService.getProfile()
+      .subscribe(
+        data => {
+          console.log("USER: ", data.user)
+          this.user = data.user
+        }
+      )
+    this.isFinished = true
+  }
+    
+
 
 }

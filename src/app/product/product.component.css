@@ -1,9 +1,88 @@
-.product-item {
-  border: #ccc 1px solid;
+body {
+  margin: 0;
+  padding: 0;
+  background: #EEE;
+  font: 10px/13px 'Lucida Sans',sans-serif;
+} 
+
+
+img {
+  /* We want our images to fill the full tile width, so we use width:100% */
+  clear: left;
+  width: 100%; 
+  /* display:; */
+  margin: 0px;
+  /* margin-right: 0px; */
+  cursor: pointer;
+  padding: 0px;
 }
-.product-item .image {
-  max-width: 120px;
+.image{
+  text-align: center;
 }
-.product-item .image img {
-  max-width: 100%;
+.list-group-image {
+  font-size: 2em;
+  transition: transform .3s ease-out;
+}
+/* .list-group-image:hover{
+  transform: translate(0, -5px);
+} */
+
+
+/* The caption goes at the bottom of each tile*/
+.caption {
+  position: absolute;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  /* We set a partially-transparent background along with some padding: */
+  /* background: rgba(0, 0, 0, 0.02); */
+  color: #000;
+  margin-bottom: -10px;
+  /* padding: -25px; */
+  text-align: center;
+  
+  /* border-radius: 5px; */
+  /* -webkit-border-radius: 5px; */
+  /* -moz-border-radius: 5px; */
+ 
+  /* We specify a CSS3 transition to use when showing/hiding the text box: */
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+.title{
+  display: inline-block;
+  padding: 0px;
+}
+.name{
+  float:left;
+}
+.price{
+    position: absolute;
+    top: 0px;
+    right: 20px;
+}
+/* The buttons go at the bottom of each tile*/
+.button {
+  position: absolute;
+  bottom: -25px;
+  left: 0;
+  right: 0;
+  /* margin-bottom: -10px; */
+  padding: 0px;
+  text-align: center;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+/* .button:hover{
+  margin-bottom: 5px;
+} */
+
+button{
+  height: 25px;
+  cursor: pointer;
 }

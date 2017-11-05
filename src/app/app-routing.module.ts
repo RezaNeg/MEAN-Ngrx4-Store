@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -14,6 +13,7 @@ import { CheckoutComponent} from './checkout/checkout.component';
 import { OrderComponent} from './order/order.component';
 import { ProfileComponent } from './profile/profile.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 
 const routes: Routes = [
@@ -25,6 +25,7 @@ const routes: Routes = [
   { path: 'products', component: ProductListComponent },
   { path: 'cart', component: CartComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'order/:id', component: OrderComponent },

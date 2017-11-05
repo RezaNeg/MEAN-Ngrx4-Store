@@ -1,6 +1,17 @@
 <div>
+  <h2>Product Categories</h2>
+    <app-category-list [category]="categories"></app-category-list>
+</div>
+
+<div>
   <h2>Product List</h2>
+  <div class="wrap">
   <div *ngFor="let product of products">
-    <app-product [product]="product"></app-product>
+    <div class="productBox">
+      <div class="boxInner">
+        <app-product [product]="product"></app-product>
+      </div>
+    </div>
+  </div>
   </div>
 </div>

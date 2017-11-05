@@ -36,4 +36,12 @@ export class CartComponent implements OnInit {
     this.toastr.success('is removed from your cart', cart.product.name + ' ', {toastLife: 1000});
   }
 
+  getProducts(): Cart[] {
+    return this.products;
+  }
+
+  contains(cart: Cart): boolean {
+    return this.cartService.contains(cart.product);
+  }
+
 }

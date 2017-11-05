@@ -1,4 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto|Ubuntu|Ubuntu+Condensed|Ubuntu+Mono');
+
+@import 'assets/css/buttons.css';
+@import 'assets/css/breadcrumb.css';
+@import 'assets/css/forms.css';
+@import 'assets/css/messages.css';
+@import 'assets/css/boxes.css';
+@import 'assets/css/tables.css';
+
 /*
  font-family: 'Roboto', sans-serif;
  font-family: 'Ubuntu Mono', monospace;

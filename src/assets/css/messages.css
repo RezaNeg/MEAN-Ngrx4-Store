@@ -1,0 +1,32 @@
+.message {
+  font-size: 1em;
+  min-height: 1em;
+  background: #f8f8f9;
+  line-height: 1.5em;
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px rgba(34, 36, 38, .22) inset, 0 0 0 0 transparent;
+  padding: 15px 15px;
+}
+.message p {
+  color: inherit;
+}
+.message .title {
+  margin-top: 0;
+  display: block;
+  font-weight: 700;
+}
+.message.info {
+  color: #276f86;
+  box-shadow: 0 0 0 1px #a9d5de inset, 0 0 0 0 transparent;
+  background: #f8ffff;
+}
+.message.positive {
+  box-shadow: 0 0 0 1px #a3c293 inset, 0 0 0 0 transparent;
+  color: #2c662d;
+  background: #fcfff5;
+}
+.message.negative {
+  color: #9f3a38;
+  background: #fff6f6;
+  box-shadow: 0 0 0 1px #e0b4b4 inset, 0 0 0 0 transparent;
+}
