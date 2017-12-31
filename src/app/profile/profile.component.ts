@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UserService } from '../services/user.service';
+import { OrderService } from '../services/order.service';
 import { User } from '../models/user';
 import { ShippingStatus } from '../models/shipping-status';
 
@@ -13,33 +14,43 @@ import { ShippingStatus } from '../models/shipping-status';
 })
 export class ProfileComponent implements OnInit {
 
-  private user: User
-  private ShippingStatus: typeof ShippingStatus = ShippingStatus;
-  private isFinished: boolean = false;
+  public user: User;
+  public ShippingStatus: typeof ShippingStatus = ShippingStatus;
+  public isFinished: boolean = false;
 
   constructor(
     private userService: UserService,
+    private orderService: OrderService,
     private router: Router
   ) { }
 
   ngOnInit() {
-
-    
     this.userService.getProfile()
     .subscribe(
-      user => {
-        this.setUser(user);
+      data => {
+        this.user = data.user
+        console.log("USER: ", this.user)
+        if (this.user){
+          this.orderService.loadOrders(this.user.id)
+            .subscribe(
+              data => {
+                console.log ("ORDERS of current user: ", data.orders)
+                this.user.orders = data.orders;
+                console.log("UPDATED USER with ORDERS: ", this.user)
+                console.log("user.orders: ", this.user.orders)  
+               }
+            )
+        }
+        this.isFinished = true
       },
-      error => console.log(error),
+      error => console.log("ERRRRR: ", error),
       () => this.isFinished = true
     );
-      
-    
+   
   }
 
-  private setUser(user: User): void {
-    this.user = user;
-  }
+
+
 
   logout() {
     this.userService.logout();

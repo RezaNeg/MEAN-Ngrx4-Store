@@ -4,6 +4,8 @@
         <tr>
           <th></th>
           <th>Product</th>
+          <th>Quantity</th>
+          <th>Unit Price</th>
           <th>Subtotal</th>
         </tr>
       </thead>
@@ -20,6 +22,14 @@
           <td class="product-column">
             <a [routerLink]="['/product-detail/', item.product.id]">{{ item.product.name }}</a>
           </td>
+
+          <td class="subtotal-column price">
+            {{ item.quantity }}
+          </td>
+
+          <td class="subtotal-column price">
+            ${{ item.product.price }}
+          </td>
     
           <td class="subtotal-column price">
             ${{ item.quantity * item.product.price }}
@@ -31,21 +41,21 @@
       <tfoot>
     
         <tr>
-          <td colspan="2" class="total-heading">Subtotal</td>
+          <td colspan="4" class="total-heading">Subtotal</td>
           <td>
             <span class="price">${{ subtotal }}</span>
           </td>
         </tr>
     
         <tr>
-          <td colspan="2" class="total-heading">Shipping</td>
+          <td colspan="4" class="total-heading">Shipping</td>
           <td>
             <span class="price">${{ shippingCost }}</span>
           </td>
         </tr>
     
         <tr>
-          <td colspan="2" class="total-heading">Grand total</td>
+          <td colspan="4" class="total-heading">Grand total</td>
           <td>
             <span class="price">${{ grandTotal }}</span>
           </td>

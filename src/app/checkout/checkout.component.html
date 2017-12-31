@@ -1,57 +1,17 @@
 <div class="checkout">
-    
-      <form class="form" (ngSubmit)="onCheckoutSubmit(checkoutForm)" #checkoutForm="ngForm">
-    
+      <div class="message positive" *ngIf="orderCreated">
+        <h3 class="title">Thank you!</h3>
+        <p>Your order is created and you will receive an email confirmation in a moment</p>
+        <p>Click <a routerLink="/products">here</a> to continue browsing our products</p>
+      </div>
+      <form class="form" (ngSubmit)="onCheckoutSubmit(checkoutForm)" #checkoutForm="ngForm" *ngIf="isFinished && !orderCreated" >
+        <p *ngIf="!user">Already have an account? Click <a routerLink="/login">here</a> to login</p>
         <div class="row">
     
           <div class="col-md-4">
-    
-            <div class="box">
-              <div class="title">
-                <i class="fa fa-home"></i>
-                Billing Address
-              </div>
-    
-              <div class="content">
-    
-                <div class="row">
-    
-                  <div class="field col-md-6">
-                    <label for="street">Street</label>
-                    <input type="text" name="street" placeholder="Street" id="street" [(ngModel)]="form.street">
-                  </div>
-    
-                  <div class="field col-md-6">
-                    <label for="city">City</label>
-                    <input type="text" name="city" placeholder="City" id="city" [(ngModel)]="form.city">
-                  </div>
-    
-                  <div class="field col-md-12">
-                    <label for="state">State</label>
-                    <input type="text" name="state" placeholder="State" id="state" [(ngModel)]="form.state">
-                  </div>
-    
-                  <div class="field col-md-12">
-                    <label for="country">Country</label>
-                    <input type="country" name="country" placeholder="Country" id="country" [(ngModel)]="form.country">
-                  </div>
-    
-                  <div class="field col-md-6">
-                    <label for="zip">Zip</label>
-                    <input type="postcode" name="zip" placeholder="ZIP" id="zip" [(ngModel)]="form.zip">
-                  </div>
-    
-                  <div class="field col-md-12">
-                    <label for="phone">Telephone</label>
-                    <input type="phone" name="phone" placeholder="Telephone" id="phone" [(ngModel)]="form.phone">
-                  </div>
-    
-                </div>
-    
-              </div>
-    
-            </div>
-    
+            <app-checkout-address
+              [address]="address">
+            </app-checkout-address>
           </div>
     
           <div class="col-md-8"> <!-- .col-md-8 -->
@@ -104,7 +64,7 @@
                     [items]="cart"
                     [subtotal]="subtotal"
                     [shippingCost]="(selectedShippingMethod ? selectedShippingMethod.price : 0)"
-                    [grandTotal]="subtotal + (selectedShippingMethod ? selectedShippingMethod.price : 0)*100/100">
+                    [grandTotal]="this.calculateGrandTotal().toFixed(2)">
                   </app-checkout-items>
     
                   <div *ngIf="!cart.length">
@@ -135,7 +95,7 @@
     
               <div class="col-md-6"> <!-- .col-md-6 -->
     
-                <button class="button" type="submit">Place Order</button>
+                <button class="button" [disabled]="!selectedShippingMethod" type="submit">Place Order</button>
     
               </div> <!-- /.col-md-6 -->
     

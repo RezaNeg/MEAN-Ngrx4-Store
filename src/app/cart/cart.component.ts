@@ -3,7 +3,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import { CartService } from '../services/cart.service';
 import { Product } from '../models/product';
-import { Cart } from '../models/cart';
+import { OrderLine } from './../models/order-line';
 
 
 @Component({
@@ -13,7 +13,7 @@ import { Cart } from '../models/cart';
 })
 export class CartComponent implements OnInit {
 
-  private products: Cart[];
+  private products: OrderLine[];
 
   constructor(
     private cartService: CartService,
@@ -23,25 +23,26 @@ export class CartComponent implements OnInit {
 
   ngOnInit() {
     this.loadProducts();
+    console.log("CART: ", this.products)
   }
 
   loadProducts(): void {
     this.products = this.cartService.getItems();
   }
 
-  removeItem(cart: Cart): void {
-    this.cartService.delete(cart.product);
+  removeItem(orderLine: OrderLine): void {
+    this.cartService.delete(orderLine.product);
     this.products = this.cartService.getItems();
 
-    this.toastr.success('is removed from your cart', cart.product.name + ' ', {toastLife: 1000});
+    this.toastr.success('is removed from your cart', orderLine.product.name + ' ', {toastLife: 1000});
   }
 
-  getProducts(): Cart[] {
+  getProducts(): OrderLine[] {
     return this.products;
   }
 
-  contains(cart: Cart): boolean {
-    return this.cartService.contains(cart.product);
+  contains(orderLine: OrderLine): boolean {
+    return this.cartService.contains(orderLine.product);
   }
 
 }

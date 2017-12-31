@@ -10,14 +10,27 @@ export class AddressService {
 
   constructor(private http: Http) { }
 
-  create(address: Address): Observable<any> {
+  createOrUpdate(address: Address): Observable<any> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     console.log("ADDRESS: ", address)
     return this.http.post(this.url, JSON.stringify(address), options)
-      .map((res: Response) => { res.json()
-                                console.log("RES ADDRESS: ", res.json())  })
+      .map((res: Response) => { 
+        console.log("RES ADDRESS: ", res.json())  
+        return res.json()
+      })
       .catch((err: any) => Observable.throw(err.json().error));
+  }
+
+  loadUserAddress(address_id): Observable<any>{
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.get(this.url+ '/' + address_id , options)
+      .map((res: Response) => { 
+                                console.log("LOAD ADDRESS: ", res.json())
+                                return res.json()
+      }).catch((err: any) => Observable.throw(err.json().error));
+    
   }
 
 }

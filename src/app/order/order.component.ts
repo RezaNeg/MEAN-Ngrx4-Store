@@ -1,3 +1,4 @@
+import { OrderService } from './../services/order.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Params }   from '@angular/router';
 import { Order } from '../models/order';
@@ -12,26 +13,45 @@ import { Observable } from 'rxjs/Observable';
 })
 export class OrderComponent implements OnInit {
   @Input() order: Order;
+  private isFinished : boolean = false;
 
   private ShippingStatus: typeof ShippingStatus = ShippingStatus
 
   constructor(
     private route: ActivatedRoute,
     private checkoutService: CheckoutService,
+    private orderService: OrderService
   ) { }
 
   ngOnInit() {
-    this.fetchOrder();
+    this.getOrder();
   }
 
-  fetchOrder(): void {
-    this.route.params
-      .switchMap((params: Params) => this.checkoutService.getOrder(params['id']))
-      .subscribe(order => {
-        if (order) {
-          this.order = new Order(order)
-        }
-      });
-  }
+
+  getOrder(): void {
+    this.route.params.forEach(param => {
+      let id = parseInt(param['id']);
+      this.checkoutService.getOrder(id)
+          .subscribe(data => {
+              if (data){
+                console.log("Orders for details: ", data)
+                this.order = data['order']
+                console.log ("ORDER: ", this.order)
+                this.orderService.loadOrderItems(id)
+                .subscribe(data => {
+                  if (data){
+                    console.log("ORDER items: ", data)
+                    this.order.items = data['items']
+                    console.log ("Order with Items: ", this.order)
+                  }
+                })
+                this.isFinished = true;
+              }
+          });
+  })
+
+  
 
 }
+}
+

@@ -1,11 +1,9 @@
 export interface Address {
-    id?: String;
-    street?: String;
-    city?: String;
-    state?: String;
-    country?: String;
-    zip?: String;
-    phone?: String;
-    user_id?: number;
+    id?: string;
+    street?: string;
+    city?: string;
+    state?: string;
+    country?: string;
+    zip?: string;
+    phone?: string;
   }
-  

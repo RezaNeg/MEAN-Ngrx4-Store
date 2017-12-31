@@ -1,41 +1,37 @@
 <div class="profile">
-    <!-- <div class="message negative" *ngIf="!user">User not found</div> -->
-    <!-- <div class="message negative" *ngIf="!user">User not found</div> -->
-    
-  <div *ngIf="user">
-    <h1>Welcome back, {{ user.username }}</h1>
+  <div class="message negative" *ngIf="!user && isFinished">User not found</div>
 
-    <div class="widget">
-      <h3>Your orders</h3>
+  <div *ngIf="user && isFinished">
+        <h1>Welcome back, {{ user.firstname }}</h1>
+        <div class="widget">
+          <h3>Your orders</h3>
 
-      <div *ngIf="user.customer">
-        <div class="message info" *ngIf="!user.customer.orders">
-          You have not placed any orders yet
-        </div>
+            <div class="message info" *ngIf="!user.orders">
+              You have not placed any order yet!
+            </div>
 
-        <table class="table" *ngIf="user.customer.orders">
-          <thead>
-            <tr>
-              <th>OrderNr</th>
-              <th>Status</th>
-              <th>Date</th>
-              <th>Total</th>
-              <th>Details</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let order of user.customer.orders">
-              <td>{{ order._id }}</td>
-              <td>{{ ShippingStatus[order.status] }}</td>
-              <td>{{ order.createdAt | date:'short' }}</td>
-              <td class="price">${{ order.total }}</td>
-              <td><a [routerLink]="['/order', order._id]">Details</a></td>
-            </tr>
-          </tbody>
-        </table>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>OrderNr</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th>Total</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let order of user.orders">
+                  <td> {{ order.id }}</td>
+                  <td> {{ ShippingStatus[order.status] }}</td>
+                  <td> {{ order.createdAt | date:'short' }}</td>
+                  <td class="price">${{ order.total }}</td>
+                  <td><a [routerLink]="['/order', order.id]">Details</a></td>
+                </tr>
+              </tbody>
+            </table>
 
-      </div>
-    </div>
+          </div>
 
     <button class="button" type="button" (click)="logout()">Sign out</button>
   </div>

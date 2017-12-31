@@ -1,3 +1,6 @@
+import { Address } from './address';
+import { Order } from './order';
+
 export interface IUser {
     
         id? : number;
@@ -19,6 +22,8 @@ export interface IUser {
         loading? : boolean;
         error? : string;
         ip? : string;
+        address? : Address;
+        orders?: Order[];
     }
     
     export class User implements IUser {
@@ -41,6 +46,9 @@ export interface IUser {
             public imageURL? : string,
             public loading? : boolean,
             public error? : string,
-            public ip? : string
+            public ip? : string,
+            public address? : Address,
+            public orders? : Order[],
+            public address_id?: string,
          ){}
     }

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../models/product';
-import { Cart } from '../models/cart';
+import { OrderLine } from '../models/order-line';
 
 @Injectable()
 export class CartService {
-  private items: Cart[] = [];
+  private items: OrderLine[] = [];
   public totalPrice: number
 
   constructor() { }
@@ -14,12 +14,13 @@ export class CartService {
       this.items.map(item => {
         if (item.product.id === product.id) {
           item.quantity += 1;
+          item.subTotal += item.product.price;
         }
-        return item;
+        // return item;
       });
     }
     else {
-      this.items.push(new Cart(product, 1));
+      this.items.push(new OrderLine(product, 1));
     }
   }
 
@@ -35,7 +36,7 @@ export class CartService {
     this.items = [];
   }
 
-  getItems(): Cart[] {
+  getItems(): OrderLine[] {
     return this.items;
   }
 
@@ -47,7 +48,7 @@ export class CartService {
     return Number(this.totalPrice.toFixed(2));
   }
 
-  getItem(product: Product): Cart {
+  getItem(product: Product): OrderLine {
     return this.items.find(item => item.product.id === product.id);
   }
 

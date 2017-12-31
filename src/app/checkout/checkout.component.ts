@@ -1,11 +1,12 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Response } from '@angular/http';
 import { Observable } from 'rxjs/rx';
 import { NgForm } from '@angular/forms';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
+import { CheckoutAddressComponent } from '../checkout-address/checkout-address.component';
 
-import { Cart } from '../models/cart';
 import { User } from '../models/user';
 import { Address } from '../models/address';
 import { Product } from '../models/product';
@@ -17,6 +18,7 @@ import { CheckoutService } from '../services/checkout.service';
 import { ShippingService } from '../services/shipping.service';
 import { UserService } from './../services/user.service';
 import { AddressService } from './../services/address.service';
+import { OrderService } from './../services/order.service';
 
 @Component({
   selector: 'app-checkout',
@@ -24,8 +26,9 @@ import { AddressService } from './../services/address.service';
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
+  @ViewChild(CheckoutAddressComponent) addressComponent: CheckoutAddressComponent;
 
-  cart: Cart[];
+  cart: OrderLine[];
   private shippingMethod : ShippingMethod[];
   private selectedShippingMethod: ShippingMethod;
   private subtotal: number = 0;
@@ -34,6 +37,7 @@ export class CheckoutComponent implements OnInit {
   private isFinished = false;
   private orderCreated = false;
   private address : Address;
+  private totalPrice: number = 0;
 
 
   constructor(
@@ -42,6 +46,7 @@ export class CheckoutComponent implements OnInit {
     private addressService: AddressService,
     private shippingService: ShippingService,
     private userService: UserService,
+    private orderService: OrderService,
     public toastr: ToastsManager
   ) { }
 
@@ -49,33 +54,41 @@ export class CheckoutComponent implements OnInit {
     this.loadcart();
     this.loadShippingMethod();
     this.calculateSubTotal();
-    this.loadUser();
-
+    this.loadUserAndAddress();
+    // this.loadAddress();
   }
   onCheckoutSubmit(checkoutForm: NgForm) {
-    if (this.user){
+    console.log("Form comp: ", this.addressComponent.address)
+    if (this.user && !this.user.address){
+      // TODO: form validity must be added
       if (checkoutForm.valid) {
         console.log('submitting...', checkoutForm);
-        const inputAddress: Address = {
-          street: checkoutForm.value.street,
-          city: checkoutForm.value.city,
-          state: checkoutForm.value.state,
-          country: checkoutForm.value.country,
-          zip: checkoutForm.value.zip,
-          phone: checkoutForm.value.phone,
-          user_id: this.user.id
-        }
+        const inputAddress: Address = this.addressComponent.address
+        console.log("input address: ", inputAddress)
+        // {
+        //   street: checkoutForm.value.street,
+        //   city: checkoutForm.value.city,
+        //   state: checkoutForm.value.state,
+        //   country: checkoutForm.value.country,
+        //   zip: checkoutForm.value.zip,
+        //   phone: checkoutForm.value.phone
+        // }
         console.log("THIS USER: ", this.user)
 
-        this.addressService.create(inputAddress)
-        .map(res => 
-          this.checkoutService.createOrder( this.user.id,
-                                            this.total(), 
-                                            this.selectedShippingMethod))
-            .subscribe(data => {console.log(data.subscribe(x => console.log(x)));
-              // then create orderlines in server database based on order_id and user_id
-        })
-      
+        this.createOrder(this.user.id, this.calculateGrandTotal(), this.selectedShippingMethod.id)
+        .concatMap(res1 => this.createAddress(inputAddress))
+        .subscribe(res2 => {
+          this.orderCreated = true
+          console.log("ADDRESS RES2 : ", res2)
+          this.user.address_id = res2.id
+          console.log("updated USER address: ", this.user)
+          this.userService.updateUser(this.user)
+            .subscribe(res3 => {
+              //remove items from cart after checkout!
+              this.cartService.clear()
+            })
+          }
+        );    
       }
     }else{
       this.toastr.error("You must login first!", "ERROR", { lifetime: 1 });
@@ -87,11 +100,11 @@ export class CheckoutComponent implements OnInit {
     this.cart = this.cartService.getItems();
   }
 
-  getcart(): Cart[] {
+  getcart(): OrderLine[] {
     return this.cart;
   }
 
-  setcart(cart: Cart[]): void {
+  setcart(cart: OrderLine[]): void {
     this.cart = cart;
   }
 
@@ -113,7 +126,6 @@ export class CheckoutComponent implements OnInit {
         console.log("Selected SHIPPING METHOD: ", this.selectedShippingMethod)
         console.log("Shipping methods from server: ", data["shipping_methods"])
       });
-      
   }
   
   getShippingMethod(): ShippingMethod[] {
@@ -125,7 +137,12 @@ export class CheckoutComponent implements OnInit {
     this.selectedShippingMethod = shipping;
   }
 
-  loadUser(): void {
+  calculateGrandTotal(): number{
+    
+    return ((this.selectedShippingMethod ? this.selectedShippingMethod.price : 0) + this.subtotal);
+  }
+
+  loadUserAndAddress(): void {
     if (!this.userService.isLoggedIn()) {
       this.isFinished = true;
       return null;
@@ -135,11 +152,31 @@ export class CheckoutComponent implements OnInit {
         data => {
           console.log("USER: ", data.user)
           this.user = data.user
+          console.log("this user: ", this.user)
+          // if ("Address" in this.user) {
+          if (this.user.address_id !== null) {
+            this.addressService.loadUserAddress(this.user.address_id)
+              .subscribe(
+                data => {
+                  console.log("Loaded address for current User", data)
+                  this.address = data.address
+                  }
+                )
+            }else{ console.log("the User has no Address property!!!!")}
         }
       )
     this.isFinished = true
   }
-    
+
+  createAddress(address: Address) {
+    return this.addressService.createOrUpdate(address)
+  }
+  
+  createOrder(userId, total, shippingMethodId) {
+    return this.checkoutService.createOrder( userId, total, shippingMethodId)
+  }
+  
 
 
 }
+

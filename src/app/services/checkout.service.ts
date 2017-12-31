@@ -20,7 +20,7 @@ export class CheckoutService {
     let body = JSON.stringify({
       user_id: user_id,
       total: total,
-      shipping_method_id : shippingMethodId
+      shippingMethod_id : shippingMethodId
     });
 
     return this.http.post(this.url, body, options)
@@ -28,7 +28,7 @@ export class CheckoutService {
       .catch((err: any) => Observable.throw(err.json().error));
   }
 
-  getOrder(id: String): Observable<Order> {
+  getOrder(id: number): Observable<Order> {
     return this.http.get(this.url + '/' + id)
       .map((res: Response) => res.json())
       .catch((err: any) => Observable.throw(err.json().error));

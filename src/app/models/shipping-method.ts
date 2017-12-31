@@ -1,6 +1,6 @@
 export interface ShippingMethod {
     id: String;
     name: String;
-    price: Number;
+    price: number; 
     description?: String;
   }

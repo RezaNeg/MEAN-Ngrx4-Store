@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { Observable, Observer } from 'rxjs/Rx';
 import { tokenNotExpired } from 'angular2-jwt';
 import { Subject }    from 'rxjs/Subject';
+import { Http, RequestOptions, Headers, Response } from '@angular/http';
+
 
 import { User } from '../models/User';
 import { AuthService } from './auth.service';
@@ -12,17 +14,23 @@ import { AppSetting } from '../config/app.config';
 export class UserService {
 
   public isAuthenticated: boolean = false; 
-  public currentUser : User = new User();
+  public currentUser : User;
+  // public currentUser : User = new User();
   public loginObs$ : any;
   public socialObs$ : Observable<any>;
   public registerObs$ : Observable<any>;
   public authToken: any;
   public profileImage: string;
   public loggedIn: boolean = false;
+
+  private url = 'http://localhost:3000/';
+  private headers = new Headers({ 'Content-Type': 'application/json' });
+  private options = new RequestOptions({ headers: this.headers });
   
   constructor(
       private router: Router,
-      private authService: AuthService
+      private authService: AuthService,
+      private http: Http
   ) { }
 
   localLogin(email: string, password: string):any {
@@ -94,6 +102,11 @@ export class UserService {
     return this.authService.getProfile(token);
     }
 
+  updateUser(user): any {
+    return this.http.put(this.url + 'users/', user, this.options)
+    .map(res => res.json());
+  }
+  
   // getProfile(): User{
 	// let token = this.loadToken();
   //   let getProfile$ = this.authService.getProfile(token);

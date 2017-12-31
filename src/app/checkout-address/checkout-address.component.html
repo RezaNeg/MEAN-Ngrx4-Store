@@ -1,0 +1,45 @@
+<div class="box">
+  <div class="title">
+    <i class="fa fa-home"></i>
+    Billing / Shipping Address
+  </div>
+
+  <div class="content">
+
+    <div class="row">
+
+      <div class="field col-md-6">
+        <!-- <label for="street">Street</label> -->
+        <input type="text" name="street" placeholder="Street" id="street" required="required" [(ngModel)]="address.street">
+      </div>
+
+      <div class="field col-md-6">
+        <!-- <label for="city">City</label> -->
+        <input type="text" name="city" placeholder="City" id="city"  required="required" [(ngModel)]="address.city">
+      </div>
+
+      <div class="field col-md-12">
+        <!-- <label for="state">State</label> -->
+        <input type="text" name="state" placeholder="State" id="state"  required="required" [(ngModel)]="address.state">
+      </div>
+
+      <div class="field col-md-12">
+        <!-- <label for="country">Country</label> -->
+        <input type="country" name="country" placeholder="Country" id="country"  required="required" [(ngModel)]="address.country">
+      </div>
+
+      <div class="field col-md-6">
+        <!-- <label for="zip">Zip</label> -->
+        <input type="postcode" name="zip" placeholder="ZIP" id="zip"  required="required" [(ngModel)]="address.zip">
+      </div>
+
+      <div class="field col-md-12">
+        <!-- <label for="phone">Telephone</label> -->
+        <input type="phone" name="phone" placeholder="Telephone" id="phone"  required="required" [(ngModel)]="address.phone">
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
