@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Response } from '@angular/http';
@@ -76,19 +77,38 @@ export class CheckoutComponent implements OnInit {
         console.log("THIS USER: ", this.user)
 
         this.createOrder(this.user.id, this.calculateGrandTotal(), this.selectedShippingMethod.id)
-        .concatMap(res1 => this.createAddress(inputAddress))
-        .subscribe(res2 => {
+        .subscribe(order => {
+          // TODO adding if order exist
+          console.log("created order: ", order)
+          
+          let order_id = order.order.id
           this.orderCreated = true
-          console.log("ADDRESS RES2 : ", res2)
-          this.user.address_id = res2.id
-          console.log("updated USER address: ", this.user)
-          this.userService.updateUser(this.user)
-            .subscribe(res3 => {
-              //remove items from cart after checkout!
-              this.cartService.clear()
-            })
-          }
-        );    
+          this.createAddress(inputAddress)
+          .subscribe(address => {
+            console.log("created address: ", address)
+            this.user.address_id = address.id
+            console.log("updated USER address: ", this.user)
+            this.userService.updateUser(this.user)
+              .subscribe(updatedUser => {
+                console.log('UPDATED USER with new address: ', updatedUser)
+                // creating orderlines in the DB
+                this.cart.forEach(element => {
+                  console.log("element of cart: ", element)
+                  this.orderService.createOrderItem(element.quantity, element.product.price, element.product.id, order_id)
+                    .subscribe(orderItem =>{
+                      // Check if orderline is created successfully in Backend!
+                    })
+                });
+                //remove items from cart after checkout!
+                this.cartService.clear()
+              })
+            }
+          ); 
+        })
+        
+        
+        
+        
       }
     }else{
       this.toastr.error("You must login first!", "ERROR", { lifetime: 1 });

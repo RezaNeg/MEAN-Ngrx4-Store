@@ -1,3 +1,4 @@
+import { OrderLine } from './../models/order-line';
 import { Component, OnInit, Input } from '@angular/core';
 import { Cart } from '../models/cart';
 
@@ -7,7 +8,8 @@ import { Cart } from '../models/cart';
   styleUrls: ['./checkout-items.component.css']
 })
 export class CheckoutItemsComponent implements OnInit {
-  @Input() items: Cart[];
+  // @Input() items: Cart[];  
+  @Input() items: OrderLine[];
   @Input() shippingCost: number;
   @Input() subtotal: number;
   @Input() grandTotal: number;
