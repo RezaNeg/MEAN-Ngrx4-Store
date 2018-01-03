@@ -1,17 +1,14 @@
 <form (ngSubmit)="onSubmit()" #contactForm="ngForm" class="form" *ngIf="!submitted">
     
       <div class="field">
-        <label for="name">Name</label>
         <input type="text" [(ngModel)]="form.name" name="name" #name="ngModel" id="name" placeholder="Name" required>
       </div>
     
       <div class="field">
-        <label for="email">Email</label>
         <input type="email" [(ngModel)]="form.email" name="email" #email="ngModel" id="email" placeholder="Email" required>
       </div>
     
       <div class="field">
-        <label for="message">Message</label>
         <textarea [(ngModel)]="form.message" name="message" #message="ngModel" id="message" rows="8" cols="80" placeholder="Message"></textarea>
       </div>
     

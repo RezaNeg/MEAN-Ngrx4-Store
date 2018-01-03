@@ -7,9 +7,9 @@ export class Order {
   total: number;
   status?: number;
   user?: User;
-  user_id: number;
+  userId: number;
   shippingMethod?: ShippingMethod;
-  shipping_method_id?: number;
+  shippingMethodId?: number;
   items?: OrderLine[];
   updatedAt: String;
   createdAt: String;
@@ -18,9 +18,9 @@ export class Order {
     this.id = order.id;
     this.total = order.total;
     this.user = order.user;
-    this.user_id = order.user_id;
+    this.userId = order.userId;
     this.shippingMethod = order.shippingMethod;
-    this.shipping_method_id = order.shipping_method_id;
+    this.shippingMethodId = order.shippingMethodId;
     this.items = order.items;
     this.createdAt = order.createdAt;
     this.updatedAt = order.updatedAt;

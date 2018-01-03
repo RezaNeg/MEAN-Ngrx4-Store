@@ -1,6 +1,6 @@
-import { element } from 'protractor';
+// import { element } from 'protractor';
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
 import { Response } from '@angular/http';
 import { Observable } from 'rxjs/rx';
 import { NgForm } from '@angular/forms';
@@ -39,6 +39,8 @@ export class CheckoutComponent implements OnInit {
   private orderCreated = false;
   private address : Address;
   private totalPrice: number = 0;
+  private addressLoaded: boolean = false;
+  private updatedAddressId: string = null;
 
 
   constructor(
@@ -56,11 +58,10 @@ export class CheckoutComponent implements OnInit {
     this.loadShippingMethod();
     this.calculateSubTotal();
     this.loadUserAndAddress();
-    // this.loadAddress();
   }
   onCheckoutSubmit(checkoutForm: NgForm) {
     console.log("Form comp: ", this.addressComponent.address)
-    if (this.user && !this.user.address){
+    if (this.user){
       // TODO: form validity must be added
       if (checkoutForm.valid) {
         console.log('submitting...', checkoutForm);
@@ -81,20 +82,20 @@ export class CheckoutComponent implements OnInit {
           // TODO adding if order exist
           console.log("created order: ", order)
           
-          let order_id = order.order.id
+          let orderId = order.order.id
           this.orderCreated = true
-          this.createAddress(inputAddress)
+          this.createOrUpdateAddress(inputAddress)
           .subscribe(address => {
             console.log("created address: ", address)
-            this.user.address_id = address.id
+            this.user.addressId = address.id
+            this.updatedAddressId = address.id
             console.log("updated USER address: ", this.user)
             this.userService.updateUser(this.user)
-              .subscribe(updatedUser => {
-                console.log('UPDATED USER with new address: ', updatedUser)
+              .subscribe(() => {
                 // creating orderlines in the DB
                 this.cart.forEach(element => {
                   console.log("element of cart: ", element)
-                  this.orderService.createOrderItem(element.quantity, element.product.price, element.product.id, order_id)
+                  this.orderService.createOrderItem(element.quantity, element.product.price, element.product.id, orderId)
                     .subscribe(orderItem =>{
                       // Check if orderline is created successfully in Backend!
                     })
@@ -168,18 +169,19 @@ export class CheckoutComponent implements OnInit {
       return null;
     }
     this.userService.getProfile()
-      .subscribe(
-        data => {
-          console.log("USER: ", data.user)
+      .subscribe((data) => {
           this.user = data.user
-          console.log("this user: ", this.user)
-          // if ("Address" in this.user) {
-          if (this.user.address_id !== null) {
-            this.addressService.loadUserAddress(this.user.address_id)
+          if (this.updatedAddressId !== null){
+            this.user.addressId = this.updatedAddressId
+          }
+          if (this.user.addressId !== null) {
+            console.log("new address ID: ", this.user.addressId)
+            this.addressService.loadAddress(this.user.addressId)
               .subscribe(
                 data => {
                   console.log("Loaded address for current User", data)
                   this.address = data.address
+                  this.addressLoaded = true
                   }
                 )
             }else{ console.log("the User has no Address property!!!!")}
@@ -188,7 +190,7 @@ export class CheckoutComponent implements OnInit {
     this.isFinished = true
   }
 
-  createAddress(address: Address) {
+  createOrUpdateAddress(address: Address) {
     return this.addressService.createOrUpdate(address)
   }
   

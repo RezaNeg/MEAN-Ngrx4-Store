@@ -1,6 +1,6 @@
 export class Product {
     id?: number;
-    cat_id?: number;
+    categoryId?: number;
     name?: String;
     desc?: String;
     src?: String;
@@ -8,7 +8,7 @@ export class Product {
   
     constructor(product: any) {
       this.id = product.id;
-      this.cat_id = product.cat_id;
+      this.categoryId = product.categoryId;
       this.name = product.name;
       this.desc = product.desc;
       this.src = product.src;

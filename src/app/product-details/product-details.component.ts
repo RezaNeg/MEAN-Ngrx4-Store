@@ -41,7 +41,7 @@ export class ProductDetailsComponent implements OnInit {
                   this.product = data['product'];
                   console.log ("PROD: ", this.product)
                   // Load the category
-                  this.getProductCategory(this.product.cat_id);
+                  this.getProductCategory(this.product.categoryId);
                   }
           });
   })

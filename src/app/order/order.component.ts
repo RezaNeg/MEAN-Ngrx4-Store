@@ -12,10 +12,11 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./order.component.css']
 })
 export class OrderComponent implements OnInit {
-  @Input() order: Order;
-  private isFinished : boolean = false;
-
+  @Input() order: Order
+  private isFinished : boolean = false
   private ShippingStatus: typeof ShippingStatus = ShippingStatus
+  private subTotal: any
+  
 
   constructor(
     private route: ActivatedRoute,
@@ -43,15 +44,19 @@ export class OrderComponent implements OnInit {
                     console.log("ORDER items: ", data)
                     this.order.items = data['items']
                     console.log ("Order with Items: ", this.order)
+                    this.subTotal = this.calculateSubTotal()
                   }
                 })
                 this.isFinished = true;
               }
           });
-  })
+    })
+  }
 
-  
-
-}
+  calculateSubTotal(){
+    return this.order.items.reduce((sum, item) => {
+      return sum + (item.product.price * item.quantity);
+    }, 0);
+  }
 }
 

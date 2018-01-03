@@ -13,14 +13,14 @@ export class CheckoutService {
 
   constructor(private http: Http) { }
 
-  createOrder(user_id, total, shippingMethodId) {
+  createOrder(userId, total, shippingMethodId) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
     let body = JSON.stringify({
-      user_id: user_id,
+      userId: userId,
       total: total,
-      shippingMethod_id : shippingMethodId
+      shippingMethodId : shippingMethodId
     });
 
     return this.http.post(this.url, body, options)

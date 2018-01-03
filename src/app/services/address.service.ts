@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class AddressService {
 
-  private url = 'http://localhost:3000/address'
+  private url = 'http://localhost:3000'
 
   constructor(private http: Http) { }
 
@@ -14,7 +14,7 @@ export class AddressService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     console.log("ADDRESS: ", address)
-    return this.http.post(this.url, JSON.stringify(address), options)
+    return this.http.post(this.url + '/address/', JSON.stringify(address), options)
       .map((res: Response) => { 
         console.log("RES ADDRESS: ", res.json())  
         return res.json()
@@ -22,10 +22,10 @@ export class AddressService {
       .catch((err: any) => Observable.throw(err.json().error));
   }
 
-  loadUserAddress(address_id): Observable<any>{
+  loadUserAddress(userId): Observable<any>{ //TODO
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    return this.http.get(this.url+ '/' + address_id , options)
+    return this.http.get(this.url+ '/address/user/' + userId , options)
       .map((res: Response) => { 
                                 console.log("LOAD ADDRESS: ", res.json())
                                 return res.json()
@@ -33,4 +33,13 @@ export class AddressService {
     
   }
 
+  loadAddress(addressId): Observable<any>{
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.get(this.url+ '/address/' + addressId , options)
+      .map((res: Response) => { 
+                                console.log("LOAD ADDRESS: ", res.json())
+                                return res.json()
+      }).catch((err: any) => Observable.throw(err.json().error));
+  }
 }

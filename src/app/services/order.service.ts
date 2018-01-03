@@ -12,35 +12,35 @@ export class OrderService {
 
   constructor(private http: Http) { }
 
-  loadOrders(user_id): Observable<any> {
+  loadOrders(userId): Observable<any> {
     // let headers = new Headers();
     // headers.append('Content-Type', 'application/json');
-    return this.http.get(this.url + 'orders/'+ user_id)
+    return this.http.get(this.url + 'orders/'+ userId)
                     .map(res => res.json())
                     .catch(this.handleError);
   }
 
 
-  loadOrderItems(order_id): Observable<any> {
+  loadOrderItems(orderId): Observable<any> {
     // let headers = new Headers();
     // headers.append('Content-Type', 'application/json');
-    return this.http.get(this.url + 'order-items/'+ order_id)
+    return this.http.get(this.url + 'order-items/'+ orderId)
                     .map(res => res.json())
                     .catch(this.handleError);
   }
 
-  createOrderItem(quantity, price, product_id, order_id): Observable<any> {
+  createOrderItem(quantity, price, productId, orderId): Observable<any> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
     let body = JSON.stringify({
       quantity: quantity,
       price: price,
-      productId : product_id,
-      orderId: order_id
+      productId : productId,
+      orderId: orderId
     });
 
-    return this.http.post(this.url + 'order-items/' + order_id, body, options)
+    return this.http.post(this.url + 'order-items/' + orderId, body, options)
       .map((res: Response) => res.json())
       .catch((err: any) => Observable.throw(err.json().error));
   }

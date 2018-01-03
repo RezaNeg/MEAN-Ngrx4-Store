@@ -5,7 +5,7 @@
     </div>
   
     <div *ngIf="isFinished">
-      <h1>Order: {{ order.id }}</h1>
+      <h1>Orders made by {{ order.user.firstname + ' ' + order.user.lastname}} </h1>
   
       <table>
         <tr>
@@ -29,7 +29,7 @@
         </tr>
         <tr>
           <td>Payment method</td>
-          <td>[payment method]</td>
+          <td>TODO [some data]</td>
         </tr>
         <tr>
           <td>Invoice</td>
@@ -38,22 +38,18 @@
         </tr>
       </table>
   
-      <div class="customer-info row"> <!-- .row -->
+      <div class="customer-info row">
+
   
-        <div class="col-md-6 col-xs-12"> <!-- .col -->
-          <h4>Customer</h4>
-          {{ order.user_id }}
-        </div> <!-- /.col -->
-  
-        <!-- <div class="col-md-6 col-xs-12" *ngIf="order.shipping"> .col -->
-          <!-- <h4>Shipping method</h4>
+        <div class="col-md-6 col-xs-12" *ngIf="order.shipping">
+          <h4>Shipping method</h4>
           {{ order.shipping.name }} <br/>
-          {{ order.customer.firstname }} {{ order.customer.lastname }} <br/>
-          {{ order.customer.address }} <br/>
-          {{ order.customer.postnumber }} {{ order.customer.city }} -->
-        <!-- </div> /.col -->
+          {{ order.user.firstname }} {{ order.user.lastname }} <br/>
+          {{ order.user.address }} <br/>
+          {{ order.userer.postnumber }} {{ order.user.city }}
+        </div>
   
-      </div> <!-- ./row -->
+      </div>
   
       <div *ngIf="order.status == ShippingStatus.Shipped">
         <!-- TODO: if shipped display message -->
@@ -62,15 +58,11 @@
           <p>Please note that the tracking number may not be available yet. It may take a few hours before you can track it.</p>
         </div>
       </div>
-  
-    <!-- <app-checkout-items
-      [items]="order.items"
-      [subtotal]="order.calculateSubTotal()"
-      [grandTotal]="order.total">
-    </app-checkout-items> -->
     
     <app-checkout-items
       [items]="order.items"
+      [subtotal]="(subTotal - 0).toFixed(2)"
+      [shippingCost]="(order.total - subTotal).toFixed(2)"
       [grandTotal]="order.total">
     </app-checkout-items>
     </div>

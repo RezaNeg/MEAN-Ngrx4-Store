@@ -6,8 +6,8 @@ export class OrderLine {
     quantity?: number;
     price?: number;
     subTotal?: number;
-    product_id?: string;
-    order_id?: string;
+    productId?: string;
+    orderId?: string;
 
     constructor(product: Product, quantity = 1) {
       this.product = product;

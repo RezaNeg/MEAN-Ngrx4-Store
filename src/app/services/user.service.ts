@@ -96,11 +96,17 @@ export class UserService {
 
   getProfile(): Observable<any>{
     if (!this.isLoggedIn()){
-      return null;
+      // 
+      return Observable.of({});
     }
     let token = this.loadToken();
-    return this.authService.getProfile(token);
-    }
+    return this.authService.getProfile(token)
+    // .subscribe(data => {
+    //   this.storeUserData(data.user, token);
+    //   console.log("profile get from profile method: ", data);
+    //   console.log("profile written to currentUser: ", this.currentUser);
+    // });
+  }
 
   updateUser(user): any {
     return this.http.put(this.url + 'users/', user, this.options)

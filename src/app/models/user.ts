@@ -24,6 +24,7 @@ export interface IUser {
         ip? : string;
         address? : Address;
         orders?: Order[];
+        addressId?: string;
     }
     
     export class User implements IUser {
@@ -49,6 +50,6 @@ export interface IUser {
             public ip? : string,
             public address? : Address,
             public orders? : Order[],
-            public address_id?: string,
+            public addressId?: string,
          ){}
     }
