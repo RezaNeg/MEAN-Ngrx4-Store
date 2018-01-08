@@ -32,7 +32,7 @@
           </td>
     
           <td class="subtotal-column price">
-            ${{ item.quantity * item.product.price }}
+            ${{ (item.quantity * item.product.price).toFixed(2) }}
           </td>
     
         </tr>

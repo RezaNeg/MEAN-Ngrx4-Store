@@ -52,4 +52,9 @@ export class CartService {
     return this.items.find(item => item.product.id === product.id);
   }
 
+  getQuantity(product:Product): number{
+    
+    return ((this.items.find(item => item.product.id === product.id) == undefined) ? 0
+      :this.items.find(item => item.product.id === product.id).quantity)   
+  }
 }

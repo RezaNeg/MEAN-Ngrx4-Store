@@ -21,6 +21,7 @@ import { Category }from '../models/category';
 export class ProductDetailsComponent implements OnInit {
   @Input() product: Product;
   public category: Category;
+  private qty: number = 0;
 
   constructor(
     private productService: ProductService,
@@ -42,9 +43,11 @@ export class ProductDetailsComponent implements OnInit {
                   console.log ("PROD: ", this.product)
                   // Load the category
                   this.getProductCategory(this.product.categoryId);
+                  this.qty = this.cartService.getQuantity(this.product);
                   }
           });
   })
+  
 
     // this.route.params
     //   .switchMap((params: Params) => this.productService.getProduct(params['id']))
@@ -56,6 +59,7 @@ export class ProductDetailsComponent implements OnInit {
 
   addToCart(): void {
     this.cartService.add(this.product);
+    this.qty = this.cartService.getQuantity(this.product);
     this.toastr.success('is added to your cart', this.product.name +'!', {toastLife: 1000});
   }
 

@@ -15,7 +15,7 @@
           </ul>
           
           <div class="price">${{ product.price }}</div>
-    
+          <p class="right-info" *ngIf="qty >0">Already in your cart: {{qty}}</p>
           <button (click)="addToCart()" class="button add-to-cart">
             <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
             Add to cart
