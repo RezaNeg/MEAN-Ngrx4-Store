@@ -1,0 +1,22 @@
+.dropdown {
+    display: inline-block;
+    position: relative;
+  }
+  .dropdown .icon {
+    cursor: pointer;
+  }
+  .dropdown .menu {
+    background: #fff;
+    position: absolute;
+    width: 100px;
+    border: 1px solid rgba(34, 36, 38, .15);
+    top: 30px;
+  }
+  .dropdown .menu .item {
+    padding: 10px;
+    display: block;
+  }
+  .dropdown .menu .item:hover {
+    background: rgba(0, 0, 0, .05);
+  }
+  

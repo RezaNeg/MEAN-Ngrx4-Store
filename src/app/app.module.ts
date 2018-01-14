@@ -40,6 +40,7 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { CheckoutAddressComponent } from './checkout-address/checkout-address.component';
+import { DropdownComponent } from './dropdown/dropdown.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { CheckoutAddressComponent } from './checkout-address/checkout-address.co
     LoginComponent,
     ProfileComponent,
     RegisterComponent,
-    CheckoutAddressComponent
+    CheckoutAddressComponent,
+    DropdownComponent
   ],
   imports: [
     AppRoutingModule,

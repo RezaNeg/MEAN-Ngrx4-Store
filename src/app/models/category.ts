@@ -3,10 +3,10 @@ export class Category {
     name?: String;
     image?: String;
   
-    constructor(category: any) {
-      this.id = category.id;
-      this.name = category.name;
-      this.image = category.image;
-    }
+    // constructor(category: any) {
+    //   this.id = category.id;
+    //   this.name = category.name;
+    //   this.image = category.image;
+    // }
   }
   
