@@ -16,7 +16,7 @@ export class CategoryService {
                     .catch(this.handleError);
   }
 
-  getCategory(id: number): Observable<Category> {
+  getCategory(id: number): Observable<any> {
     return this.http.get(this.url + '/' + id)
                     .map(res => res.json())
                     .catch(this.handleError);

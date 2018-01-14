@@ -68,6 +68,7 @@ export class ProductDetailsComponent implements OnInit {
     if (this.category == null && id !== null) {
       this.categoryService.getCategory(id)
         .subscribe(data => {
+          // TODO because of changing categoryService in BackEnd
           this.category = data['category']
           console.log("DATA for CAT: ", data['category'])
           });

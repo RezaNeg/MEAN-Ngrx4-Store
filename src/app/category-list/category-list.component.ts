@@ -9,7 +9,6 @@ import { Category } from '../models/Category';
   styleUrls: ['./category-list.component.css']
 })
 export class CategoryListComponent implements OnInit {
-  @Input() category: Category; 
   private errorMessage: string;
   private categories: Category[] = [];
 

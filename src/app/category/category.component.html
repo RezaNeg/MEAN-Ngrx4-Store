@@ -1,0 +1,22 @@
+<div class="category">
+    <div *ngIf="errorMsg" class="message negative">
+      <h3 class="title">Ooops..</h3>
+      <p>{{ errorMsg }}</p>
+    </div>
+  
+    <div *ngIf="products!=null && isFinished">
+  
+      <div class="row">
+        <app-category-list class="col-md-2 col-xs-12"></app-category-list>
+  
+        <div class="products col-md-10 col-xs-12">
+  
+          <app-product-list [products]="this.products"></app-product-list>
+  
+        </div>
+  
+      </div>
+  
+    </div>
+  
+  </div>

@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from './guards/auth.guard';
 
-import { ProductListComponent } from './product-list/product-list.component';
+import { ProductsContainerComponent } from './products-container/products-container.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
@@ -14,6 +14,7 @@ import { OrderComponent} from './order/order.component';
 import { ProfileComponent } from './profile/profile.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { CategoryComponent } from './category/category.component';
 
 
 const routes: Routes = [
@@ -22,14 +23,15 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'product-detail/:id', component: ProductDetailsComponent },
-  { path: 'products', component: ProductListComponent },
+  { path: 'products', component: ProductsContainerComponent },
+  { path: 'category/:id', component: CategoryComponent },
   { path: 'cart', component: CartComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'order/:id', component: OrderComponent },
-  { path: '**', component: ProductListComponent }  
+  { path: '**', component: ProductsContainerComponent }  
 ];
 
 @NgModule({
