@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, ViewChild, Output, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { UserService } from '../services/user.service';
+// import { CapslockDirective } from '../directives/capslock.directive'
+
 
 @Component({
   selector: 'app-login',
@@ -14,14 +16,20 @@ export class LoginComponent implements OnInit {
     email: "",
     password: "",
   };
+  private caps: boolean = false
 
   constructor(
     private userService: UserService,
     private router: Router,
-    private toastr: ToastsManager
+    private toastr: ToastsManager,
   ) { }
+   
+  ngOnInit() { 
 
-  ngOnInit() {
+  }
+
+  capsEvent($event){
+    this.caps = $event
   }
 
   onSubmit(): void {

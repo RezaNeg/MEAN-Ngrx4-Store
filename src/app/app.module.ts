@@ -43,6 +43,7 @@ import { CheckoutAddressComponent } from './checkout-address/checkout-address.co
 import { DropdownComponent } from './dropdown/dropdown.component';
 import { CategoryComponent } from './category/category.component';
 import { ProductsContainerComponent } from './products-container/products-container.component';
+import { CapslockDirective } from './directives/capslock.directive';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { ProductsContainerComponent } from './products-container/products-contai
     CheckoutAddressComponent,
     DropdownComponent,
     CategoryComponent,
-    ProductsContainerComponent
+    ProductsContainerComponent,
+    CapslockDirective
   ],
   imports: [
     AppRoutingModule,
