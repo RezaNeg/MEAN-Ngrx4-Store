@@ -1,46 +1,23 @@
-<div class="login">
-  
-    <h1>Login or create an account</h1>
-  
-    <div class="row">
-  
-  
-      <div class="col-md-6 col-xs-12"> <!-- .col -->
-        <div class="widget">
-          <h2>Sign up</h2>
-  
-          <p>Sign up for a customer account</p>
-  
-          <a class="button" routerLink="/register">Create an account</a>
-        </div>
-      </div> <!-- /.col -->
-  
-      <div class="col-md-6 col-xs-12"> <!-- .col -->
-  
-        <div class="widget">
-          <h2>Already registered?</h2>
-  
-          <p>Please login here:</p>
-  
-          <form class="form" (ngSubmit)="onSubmit()">
-  
-            <div class="field">
-              <input type="text" name="email" id="email" placeholder="Email" [(ngModel)]="loginForm.email">
-            </div>
-  
-            <div class="field">
-              <input type="password" name="password" id="password" placeholder="Password" [(ngModel)]="loginForm.password">
-              <p (capsLock)="capsEvent($event)" appCapslock> <span *ngIf="caps" style="color: red">Caps Lock is ON!</span> </p>
-            </div>
-  
-            <button class="button" type="submit">Login</button>
-  
-          </form>
-        </div>
-  
-      </div> <!-- /.col -->
-  
+<div class="login">   
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 col-xs-12"> 
+      <div class="widget">
+        <h3>Already registered?</h3>
+        <form class="form" (ngSubmit)="onSubmit()">
+          <div class="field">
+            <input type="text" name="email" id="email" placeholder="Email" [(ngModel)]="loginForm.email">
+          </div>
+          <div class="field">
+            <input type="password" name="password" id="password" placeholder="Password" [(ngModel)]="loginForm.password">
+            <p (capsLock)="capsEvent($event)" appCapslock> <span *ngIf="caps" style="color: red">Caps Lock is ON!</span> </p>
+          </div>
+          <button class="button" type="submit">Login</button>
+        </form>
+        <hr/>
+        <h4>New to HSM, Sign up <a routerLink="/register">here</a></h4>
+        
+      </div>
     </div>
-  
   </div>
-  
+</div>
+      

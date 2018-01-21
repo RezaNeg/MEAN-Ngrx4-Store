@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Params }   from '@angular/router';
 import { Location }                 from '@angular/common';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-import 'rxjs/add/operator/switchMap';
 
 import { ProductService } from '../services/product.service';
 import { CartService } from '../services/cart.service';
@@ -10,8 +9,8 @@ import { CategoryService } from '../services/category.service';
 
 import { Product } from '../models/product';
 import { Category }from '../models/category';
-
-
+import { ErrorResponse } from './../models/error-response';
+import { Message } from './../models/message';
 
 @Component({
   selector: 'app-product-details',
@@ -22,6 +21,7 @@ export class ProductDetailsComponent implements OnInit {
   @Input() product: Product;
   public category: Category;
   private qty: number = 0;
+  private errorMsg: Message;
 
   constructor(
     private productService: ProductService,
@@ -33,10 +33,12 @@ export class ProductDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.params.forEach(param => {
-      let id = parseInt(param['id']);
-      this.productService.getProduct(id)
-          .subscribe(data => {
+    this.route.params.forEach(
+      param => {
+        let id = parseInt(param['id']);
+        this.productService.getProduct(id)
+          .subscribe(
+            data => {
               if (data){
                 console.log("DATA for details: ", data)
                   this.product = data['product'];
@@ -45,16 +47,13 @@ export class ProductDetailsComponent implements OnInit {
                   this.getProductCategory(this.product.categoryId);
                   this.qty = this.cartService.getQuantity(this.product);
                   }
-          });
-  })
-  
+              },
+            err => {this.handleError(err)});
+      })
+  }
 
-    // this.route.params
-    //   .switchMap((params: Params) => this.productService.getProduct(params['id']))
-    //   .subscribe(data => {
-    //     console.log("DATA for details: ", data)
-    //     this.product = data['product']
-    //   });
+  handleError(error: ErrorResponse) {
+    this.errorMsg = new Message("negative", "Ooops...", error.message );
   }
 
   addToCart(): void {

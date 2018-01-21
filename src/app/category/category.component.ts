@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Category } from '../models/category';
 import { Product } from '../models/product';
 import { ErrorResponse } from '../models/error-response';
+import { Message } from './../models/message';
 import { CategoryService } from '../services/category.service';
 
 @Component({
@@ -12,7 +13,7 @@ import { CategoryService } from '../services/category.service';
 })
 export class CategoryComponent implements OnInit {
 
-  private errorMsg: string;
+  private errorMsg: Message;
   private products: Product[] = null;
   isFinished: boolean = false;
 
@@ -37,14 +38,14 @@ export class CategoryComponent implements OnInit {
   }
 
   handleError(error: ErrorResponse){
-    this.errorMsg = error.message;
+    this.errorMsg = new Message("negative", "Ooops...", error.message );
   }
 
   getProducts() {
     return this.products;
   }
 
-  getErrorMsg(): string {
+  getErrorMsg(): Message {
     return this.errorMsg;
   }
 

@@ -1,6 +1,7 @@
 <div class="profile">
   <div class="message negative" *ngIf="!user && isFinished">User not found</div>
-
+  <app-spinner *ngIf="!isFinished"></app-spinner>
+  
   <div *ngIf="user && isFinished">
         <h1>Welcome back, {{ user.firstname }}</h1>
         <div class="widget">

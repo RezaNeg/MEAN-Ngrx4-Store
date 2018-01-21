@@ -44,6 +44,8 @@ import { DropdownComponent } from './dropdown/dropdown.component';
 import { CategoryComponent } from './category/category.component';
 import { ProductsContainerComponent } from './products-container/products-container.component';
 import { CapslockDirective } from './directives/capslock.directive';
+import { MessageComponent } from './message/message.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +70,9 @@ import { CapslockDirective } from './directives/capslock.directive';
     DropdownComponent,
     CategoryComponent,
     ProductsContainerComponent,
-    CapslockDirective
+    CapslockDirective,
+    MessageComponent,
+    SpinnerComponent
   ],
   imports: [
     AppRoutingModule,

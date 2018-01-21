@@ -1,0 +1,11 @@
+<div class="message" [ngClass]="data.type" *ngIf="data">
+
+  <div *ngIf="data.title; else no_title">
+    <h3 class="data.title">{{ data.title }}</h3>
+    <p>{{ data.message }}</p>
+  </div>
+
+  <ng-template #no_title>
+    <p>{{ data.message }}</p>
+  </ng-template>
+</div>

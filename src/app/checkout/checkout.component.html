@@ -4,6 +4,7 @@
         <p>Your order is created and you will receive an email confirmation in a moment</p>
         <p>Click <a routerLink="/products">here</a> to continue browsing our products</p>
       </div>
+      <app-spinner *ngIf="!isFinished"></app-spinner>
       <form class="form" (ngSubmit)="onCheckoutSubmit(checkoutForm)" #checkoutForm="ngForm" *ngIf="isFinished && !orderCreated" >
         <p *ngIf="!user">Already have an account? Click <a routerLink="/login">here</a> to login</p>
         <div class="row">
