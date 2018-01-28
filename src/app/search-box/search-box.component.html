@@ -1,0 +1,33 @@
+<div class="search-box">
+  <form (ngSubmit)="onSubmit()">
+
+    <div class="row">
+
+      <div class="col-xs-8 col-md-8">
+        <div class="search">
+          <input type="text" [formControl]="term">
+        </div>
+      </div>
+
+      <div class="col-xs-4 col-md-4">
+        <div class="button-container">
+
+          <button class="button" type="submit">Search</button>
+          <button class="button" type="button" (click)="close()">Close</button>
+
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+
+  <div class="search-results">
+
+    <app-spinner *ngIf="!isFinished && term.value" [type]="'small'"></app-spinner>
+
+    <app-product-list [products]="items"></app-product-list>
+    
+  </div>
+
+</div>

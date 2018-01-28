@@ -7,6 +7,7 @@
 @import 'assets/css/boxes.css';
 @import 'assets/css/tables.css';
 @import 'assets/css/dropdown.css';
+@import 'assets/css/mixins.css';
 
 /*
  font-family: 'Roboto', sans-serif;
@@ -35,6 +36,7 @@ a {
 }
 .header {
   margin-bottom: 40px;
+  position: relative;
 }
 .header .menu {
   background: #fff;
@@ -51,6 +53,11 @@ a {
 .header .top-bar {
   text-align: right;
 }
+
+.header .top-bar i {
+  cursor: pointer;
+}
+
 .footer {
   background: #333;
   padding: 40px;

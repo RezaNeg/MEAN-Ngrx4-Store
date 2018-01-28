@@ -1,7 +1,7 @@
-
+// import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,6 +22,8 @@ import { UserService } from './services/user.service';
 import { AuthGuard } from './guards/auth.guard';
 import { AddressService } from './services/address.service';
 import { OrderService } from './services/order.service';
+import { SearchService } from './services/search.service';
+import { StorageService } from './services/storage.service';
 
 import { UserComponent } from './user/user.component';
 import { ProductListComponent } from './product-list/product-list.component';
@@ -46,6 +48,7 @@ import { ProductsContainerComponent } from './products-container/products-contai
 import { CapslockDirective } from './directives/capslock.directive';
 import { MessageComponent } from './message/message.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { SearchBoxComponent } from './search-box/search-box.component';
 
 @NgModule({
   declarations: [
@@ -72,12 +75,14 @@ import { SpinnerComponent } from './spinner/spinner.component';
     ProductsContainerComponent,
     CapslockDirective,
     MessageComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    SearchBoxComponent,
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     RouterModule,
     BrowserAnimationsModule,
@@ -94,7 +99,9 @@ import { SpinnerComponent } from './spinner/spinner.component';
     UserService,
     AuthGuard,
     AddressService,
-    OrderService
+    OrderService,
+    SearchService,
+    StorageService
   ],
   bootstrap: [AppComponent]
 })

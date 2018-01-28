@@ -3,8 +3,8 @@
   <app-spinner *ngIf="!isFinished"></app-spinner>
   <div *ngIf="products!=null && isFinished">
     
-    <h2>{{ category.name }}</h2>
-    
+    <h2>{{ products[0].category.name }}</h2>
+     
     <div class="row">
       <app-category-list class="col-md-2 col-xs-12"></app-category-list>
       <div class="products col-md-10 col-xs-12">

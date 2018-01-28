@@ -5,6 +5,14 @@ html, body {
     display: flex;
     background-color: #fff;
   }
+
+  .small-loader {
+    background: url('../../assets/img/small-loader.gif');
+    width: 110px;
+    height: 110px;
+    background-position: center;
+  }
+
   .loader {
     width: 200px;
     height: 250px;

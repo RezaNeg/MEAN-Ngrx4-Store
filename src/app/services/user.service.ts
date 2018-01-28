@@ -8,6 +8,7 @@ import { Http, RequestOptions, Headers, Response } from '@angular/http';
 
 import { User } from '../models/User';
 import { AuthService } from './auth.service';
+import { StorageService } from './storage.service';
 import { AppSetting } from '../config/app.config';
 
 @Injectable()
@@ -30,7 +31,8 @@ export class UserService {
   constructor(
       private router: Router,
       private authService: AuthService,
-      private http: Http
+      private http: Http,
+      private storageService: StorageService
   ) { }
 
   localLogin(email: string, password: string):any {
@@ -87,9 +89,11 @@ export class UserService {
  
 
   logout(): Observable<any> {
-      localStorage.removeItem('user');
-      localStorage.removeItem('token');
-      localStorage.clear();    
+      this.storageService.removeItem('user')
+      this.storageService.removeItem('id-token')
+      // this.storageService.clear()
+      this.authToken = null
+      
       this.router.navigate(['/']);
       return Observable.of({});
   }
@@ -135,14 +139,13 @@ export class UserService {
   }
 
 	loadToken(): string{
-		// const token = localStorage.getItem('id_token');
-		// this.authToken = token;
-		return localStorage.getItem('id_token');
+    return this.storageService.getItem('id_token')
 	}
 
 	storeUserData(user, token){
-		localStorage.setItem('user', JSON.stringify(user));
-		localStorage.setItem('id_token', token);
+    this.storageService.setItem('user', JSON.stringify(user))
+    this.storageService.setItem('id_token', token)
+
 		this.currentUser = user;
 		this.authToken = token;
 	}

@@ -1,27 +1,29 @@
 <div class="page">
 
   <div class="header row">
+    <app-search-box (searchEmitter)="handleSearchEmitter($event)" *ngIf="searchBoxVisible">
+    </app-search-box>
 
-      <div class="logo col-md-3">
-        <!-- <img src="https://cdn.shopify.com/s/files/1/0761/1663/t/2/assets/logo.png?7341608816128697812" alt="Logo" /> -->
-      </div>
+    <div class="logo col-md-3">
+      <img [src]="appSetting_logo" width=200px alt="Hot Sauce Media" />
+    </div>
 
-      <div class="menu col-md-7">
+    <div class="menu col-md-7">
 
-        <ul class="menu">
-          <li><a routerLink="/">Home</a></li>
-          <li><a routerLink="/products">Products</a></li>
-          <li><a routerLink="/about">About</a></li>
-          <li><a routerLink="/contact">Contact</a></li>
-        </ul>
+      <ul class="menu">
+        <li><a routerLink="/">Home</a></li>
+        <li><a routerLink="/products">Products</a></li>
+        <li><a routerLink="/about">About</a></li>
+        <li><a routerLink="/contact">Contact</a></li>
+      </ul>
 
-      </div>
+    </div>
 
-      <div class="top-bar col-md-2">
-        <i class="fa fa-search fa-2x" aria-hidden="true"></i>
-        <a routerLink="cart"><i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i></a>
-        <app-dropdown icon="fa fa-user-o fa-2x" [items]="getDropdownValues()"></app-dropdown>      
-      </div>
+    <div class="top-bar col-md-2">
+      <i (click)="toggleSearch()" class="fa fa-search fa-2x" aria-hidden="true"></i>
+      <a routerLink="cart"><i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i></a>
+      <app-dropdown icon="fa fa-user-o fa-2x" [items]="getDropdownValues()"></app-dropdown>      
+    </div>
 
   </div>
 
