@@ -10,7 +10,7 @@ import { CartService } from '../services/cart.service';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-
+  public quantity;
   @Input() product: Product;
 
   constructor(
@@ -24,5 +24,7 @@ export class ProductComponent implements OnInit {
   addToCart(): void {
     this.cartService.add(this.product);
     this.toastr.success('is added to your cart', this.product.name +'!', {toastLife: 1000} );
+    this.quantity = this.cartService.getTotalQtyInCart();
+    console.log ("total of : ", this.quantity)
   }
 }

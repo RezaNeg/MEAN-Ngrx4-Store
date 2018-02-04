@@ -1,10 +1,12 @@
-import { OrderService } from './../services/order.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Params }   from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+
 import { Order } from '../models/order';
 import { ShippingStatus } from '../models/shipping-status';
+
 import { CheckoutService } from '../services/checkout.service';
-import { Observable } from 'rxjs/Observable';
+import { OrderService } from './../services/order.service';
 
 @Component({
   selector: 'app-order',
@@ -38,16 +40,19 @@ export class OrderComponent implements OnInit {
                 console.log("Orders for details: ", data)
                 this.order = data['order']
                 console.log ("ORDER: ", this.order)
+                //TODO no need to orderService as it might be taken from checkout service directly
                 this.orderService.loadOrderItems(id)
                 .subscribe(data => {
                   if (data){
                     console.log("ORDER items: ", data)
+                    //TODO add all date to order not just .items
                     this.order.items = data['items']
                     console.log ("Order with Items: ", this.order)
                     this.subTotal = this.calculateSubTotal()
                   }
                 })
                 this.isFinished = true;
+                console.log("ORDER ::: ", this.order)
               }
           });
     })

@@ -71,4 +71,13 @@ export class CartService {
   updateStorage() {
     this.storageService.setItem('cart', JSON.stringify(this.items));
   }
+
+  getTotalQtyInCart(): number {
+    let quantity=  this.items.map(x => x["quantity"])
+    
+    return quantity.reduce((prev, cur) => {
+      return (prev + cur)
+    }, 0)
+  }
+  
 }

@@ -1,0 +1,12 @@
+<div *ngIf="payments" class="payment-list">
+
+  <div *ngFor="let payment of payments" class="payment"
+    (click)="selectPayment(payment)"
+    [ngClass]="{'active': this.selectedPayment?.id == payment.id}">
+    <!-- <img [src]="payment.image" [alt]="payment.name" width="50" height="50"> -->
+    <!-- <button class="button" type="button"><img [src]="payment.image" [alt]="payment.name" width="60" height="35"></button> -->
+    <button class="button" type="button">{{ payment.name }}</button>
+
+  </div>
+
+</div>

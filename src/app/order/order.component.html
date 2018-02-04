@@ -10,14 +10,17 @@
       <table>
         <tr>
           <td>Ordernumber:</td>
+          <td></td>
           <td>{{ order.id }}</td>
         </tr>
         <tr>
-          <td>Date created</td>
+          <td>Date created:</td>
+          <td></td>
           <td>{{ order.createdAt | date:'short' }}</td>
         </tr>
         <tr>
-          <td>Status</td>
+          <td>Status:</td>
+          <td></td>
           <td>
             <div [ngSwitch]="order.status">
               <span *ngSwitchCase="ShippingStatus.Pending">Pending</span>
@@ -28,11 +31,13 @@
           </td>
         </tr>
         <tr>
-          <td>Payment method</td>
-          <td>TODO [some data]</td>
+          <td>Payment method:</td>
+          <td></td>
+          <td>{{order.payment_method.name}}</td>
         </tr>
         <tr>
-          <td>Invoice</td>
+          <td>Invoice:</td>
+          <td> </td>
           <!-- <td>[invoice]</td> -->
           <td>invoice details</td>
         </tr>
@@ -41,12 +46,27 @@
       <div class="customer-info row">
 
   
-        <div class="col-md-6 col-xs-12" *ngIf="order.shipping">
-          <h4>Shipping method</h4>
-          {{ order.shipping.name }} <br/>
-          {{ order.user.firstname }} {{ order.user.lastname }} <br/>
-          {{ order.user.address }} <br/>
-          {{ order.userer.postnumber }} {{ order.user.city }}
+        <div class="col-md-6 col-xs-12" *ngIf="order.shipping_method">
+          <h4>Shipping Information</h4>
+          <table>
+            <tr>
+              <td>Shipping Career:</td>
+              <td>{{ order.shipping_method.name }}</td>
+            </tr>
+            <tr>
+              <td>Receiver:</td>
+              <td>{{ order.user.firstname }} {{ order.user.lastname }} </td>
+            </tr>
+            <tr></tr>
+            <tr>
+              <td>Address</td>
+              <td>
+                {{ order.user.address.street }} <br/>
+                {{ order.user.address.city }} <br/>
+                Phone: {{ order.user.address.phone }}
+              </td>
+            </tr>
+          </table>
         </div>
   
       </div>

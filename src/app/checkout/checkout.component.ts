@@ -13,6 +13,7 @@ import { Address } from '../models/address';
 import { Product } from '../models/product';
 import { ShippingMethod } from '../models/shipping-method';
 import { OrderLine } from '../models/order-line';
+import { Payment } from '../models/payment';
 
 import { CartService } from '../services/cart.service';
 import { CheckoutService } from '../services/checkout.service';
@@ -20,6 +21,7 @@ import { ShippingService } from '../services/shipping.service';
 import { UserService } from './../services/user.service';
 import { AddressService } from './../services/address.service';
 import { OrderService } from './../services/order.service';
+import { PaymentService } from '../services/payment.service';
 
 @Component({
   selector: 'app-checkout',
@@ -41,6 +43,8 @@ export class CheckoutComponent implements OnInit {
   private totalPrice: number = 0;
   private addressLoaded: boolean = false;
   private updatedAddressId: string = null;
+  private payments: Payment[];
+  private selectedPayment: Payment;
 
 
   constructor(
@@ -50,6 +54,7 @@ export class CheckoutComponent implements OnInit {
     private shippingService: ShippingService,
     private userService: UserService,
     private orderService: OrderService,
+    private paymentService: PaymentService,
     public toastr: ToastsManager
   ) { }
 
@@ -58,11 +63,12 @@ export class CheckoutComponent implements OnInit {
     this.loadShippingMethod();
     this.calculateSubTotal();
     this.loadUserAndAddress();
+    this.loadPayments();
   }
   onCheckoutSubmit(checkoutForm: NgForm) {
     console.log("Form comp: ", this.addressComponent.address)
     if (this.user){
-      // TODO: form validity must be added
+      // TODO: form validation must be added
       if (checkoutForm.valid) {
         console.log('submitting...', checkoutForm);
         const inputAddress: Address = this.addressComponent.address
@@ -77,7 +83,7 @@ export class CheckoutComponent implements OnInit {
         // }
         console.log("THIS USER: ", this.user)
 
-        this.createOrder(this.user.id, this.calculateGrandTotal(), this.selectedShippingMethod.id)
+        this.createOrder(this.user.id, this.calculateGrandTotal(), this.selectedShippingMethod.id, this.selectedPayment.id)
         .subscribe(order => {
           // TODO adding if order exist
           console.log("created order: ", order)
@@ -85,31 +91,27 @@ export class CheckoutComponent implements OnInit {
           let orderId = order.order.id
           this.orderCreated = true
           this.createOrUpdateAddress(inputAddress)
-          .subscribe(address => {
-            console.log("created address: ", address)
-            this.user.addressId = address.id
-            this.updatedAddressId = address.id
-            console.log("updated USER address: ", this.user)
-            this.userService.updateUser(this.user)
-              .subscribe(() => {
-                // creating orderlines in the DB
-                this.cart.forEach(element => {
-                  console.log("element of cart: ", element)
-                  this.orderService.createOrderItem(element.quantity, element.product.price, element.product.id, orderId)
-                    .subscribe(orderItem =>{
-                      // Check if orderline is created successfully in Backend!
-                    })
-                });
-                //remove items from cart after checkout!
-                this.cartService.clear()
-              })
-            }
-          ); 
-        })
-        
-        
-        
-        
+            .subscribe(address => {
+              console.log("created address: ", address)
+              this.user.addressId = address.id
+              this.updatedAddressId = address.id
+              console.log("updated USER address: ", this.user)
+              this.userService.updateUser(this.user)
+                .subscribe(() => {
+                  // creating orderlines in the DB
+                  this.cart.forEach(element => {
+                    console.log("element of cart: ", element)
+                    this.orderService.createOrderItem(element.quantity, element.product.price, element.product.id, orderId)
+                      .subscribe(orderItem =>{
+                        // Check if orderline is created successfully in Backend!
+                      })
+                  });
+                  //remove items from cart after checkout!
+                  this.cartService.clear()
+                })
+              }
+            ); 
+          })        
       }
     }else{
       this.toastr.error("You must login first!", "ERROR", { lifetime: 1 });
@@ -158,6 +160,11 @@ export class CheckoutComponent implements OnInit {
     this.selectedShippingMethod = shipping;
   }
 
+  onSelectPaymentMethod(payment: Payment) {
+    console.log("PAYMENT: ", payment)
+    this.selectedPayment = payment;
+  }
+
   calculateGrandTotal(): number{
     
     return ((this.selectedShippingMethod ? this.selectedShippingMethod.price : 0) + this.subtotal);
@@ -194,10 +201,14 @@ export class CheckoutComponent implements OnInit {
     return this.addressService.createOrUpdate(address)
   }
   
-  createOrder(userId, total, shippingMethodId) {
-    return this.checkoutService.createOrder( userId, total, shippingMethodId)
+  createOrder(userId, total, shippingMethodId, paymentMethodId) {
+    return this.checkoutService.createOrder( userId, total, shippingMethodId, paymentMethodId)
   }
   
+  loadPayments(){
+    this.paymentService.getActivePayments()
+      .subscribe(payments => this.payments = payments)
+  }
 
 
 }

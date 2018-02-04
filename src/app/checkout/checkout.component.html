@@ -1,113 +1,99 @@
 <div class="checkout">
-      <div class="message positive" *ngIf="orderCreated">
-        <h3 class="title">Thank you!</h3>
-        <p>Your order is created and you will receive an email confirmation in a moment</p>
-        <p>Click <a routerLink="/products">here</a> to continue browsing our products</p>
+  <div class="message positive" *ngIf="orderCreated">
+    <h3 class="title">Thank you!</h3>
+    <p>Your order is created and you will receive an email confirmation in a moment</p>
+    <p>Click <a routerLink="/products">here</a> to continue browsing our products</p>
+  </div>
+  
+  <app-spinner *ngIf="!isFinished"></app-spinner>
+  
+  <form class="form" (ngSubmit)="onCheckoutSubmit(checkoutForm)" #checkoutForm="ngForm" *ngIf="isFinished && !orderCreated" >
+    <p *ngIf="!user">Already have an account? Click <a routerLink="/login">here</a> to login</p>
+    
+    <div class="row">
+
+      <div class="col-md-4">
+        <app-checkout-address
+          [address]="address">
+        </app-checkout-address>
       </div>
-      <app-spinner *ngIf="!isFinished"></app-spinner>
-      <form class="form" (ngSubmit)="onCheckoutSubmit(checkoutForm)" #checkoutForm="ngForm" *ngIf="isFinished && !orderCreated" >
-        <p *ngIf="!user">Already have an account? Click <a routerLink="/login">here</a> to login</p>
-        <div class="row">
-    
-          <div class="col-md-4">
-            <app-checkout-address
-              [address]="address">
-            </app-checkout-address>
+
+      <div class="col-md-8"> <!-- .col-md-8 -->
+        <div class="box">
+          <div class="title">
+            <i class="fa fa-check-square"></i> Order review
           </div>
-    
-          <div class="col-md-8"> <!-- .col-md-8 -->
-    
-            <div class="row"> <!-- .row -->
-    
-              <div class="col-md-6">
-                <div class="box">
-                  <div class="title">
-                    <i class="fa fa-truck"></i> Shipping Method
-                  </div>
-                  <div class="content">
-                      <div *ngIf="!shippingMethod" class="message info">
-                          No shipping types available, please contact administrators.
-                        </div>
-        
-                        <div *ngIf="shippingMethod">
-        
-                          <button class="button" type="button" *ngFor="let type of shippingMethod" (click)="setSelectedShippingMethod(type)">{{ type.name }}</button>
-        
-                        </div>
-                  </div>
-                </div>
-              </div>
-    
-              <div class="col-md-6">
-                <div class="box">
-                  <div class="title">
-                    <i class="fa fa-credit-card"></i> Payment Method
-                  </div>
-                  <div class="content">
-    
-                    <img src="/assets/img/paypal.png" alt="Paypal">
-    
-                  </div>
-                </div>
-              </div>
-    
-            </div> <!-- /.row -->
-    
-            <div>
-              <div class="box">
-                <div class="title">
-                  <i class="fa fa-check-square"></i> Order review
-                </div>
-                <div class="content">
-    
-                  <app-checkout-items
-                    *ngIf="cart.length"
-                    [items]="cart"
-                    [subtotal]="subtotal"
-                    [shippingCost]="(selectedShippingMethod ? selectedShippingMethod.price : 0)"
-                    [grandTotal]="this.calculateGrandTotal().toFixed(2)">
-                  </app-checkout-items>
-    
-                  <div *ngIf="!cart.length">
-                    <p class="danger blink">You have no item in your cart!</p>
-                  </div>
-    
-                </div>
-              </div>
+          <div class="content">
+            <app-checkout-items
+              *ngIf="cart.length"
+              [items]="cart"
+              [subtotal]="subtotal"
+              [shippingCost]="(selectedShippingMethod ? selectedShippingMethod.price : 0)"
+              [grandTotal]="this.calculateGrandTotal().toFixed(2)">
+            </app-checkout-items>
+            <div *ngIf="!cart.length">
+              <p class="danger blink">You have no item in your cart!</p>
             </div>
-    
-            <div class="row"> <!-- .row -->
-    
-              <div class="col-md-6"> <!-- .col-md-6 -->
-    
-                <div class="box">
-    
-                  <div class="title small">Comments</div>
-    
-                  <div class="content">
-    
-                    <textarea name="comments" class="input" cols="30" rows="10"></textarea>
-    
-                  </div>
-    
-                </div>
-    
-              </div> <!-- /.col-md-6 -->
-    
-              <div class="col-md-6"> <!-- .col-md-6 -->
-    
-                <button class="button" [disabled]="!selectedShippingMethod" type="submit">Place Order</button>
-    
-              </div> <!-- /.col-md-6 -->
-    
-            </div> <!-- /.row -->
-    
-    
-          </div> <!-- /.col-md-8 -->
-    
-        </div> <!-- ./row -->
-    
-      </form>
-    
+          </div>
+        </div>
+      </div>
+
     </div>
+      
+    <div class="row"> <!-- .row -->
+
+      <div class="col-md-4">
+        <div class="box">
+          <div class="title">
+            <i class="fa fa-truck"></i> Shipping Method
+          </div>
+          <div class="content">
+            <div *ngIf="!shippingMethod" class="message info">
+                No shipping types available, please contact administrators.
+            </div>
+            <div *ngIf="shippingMethod">
+              <button class="button" type="button" *ngFor="let type of shippingMethod" (click)="setSelectedShippingMethod(type)">{{ type.name }}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="box">
+          <div class="title">
+            <i class="fa fa-credit-card"></i> Payment Method
+          </div>
+          <div class="content">
+            <!-- <img src="/assets/img/paypal.png" alt="Paypal"> -->
+            <app-payment-list [payments]="payments" [selectedPayment]="selectedPayment" (paymentEmitter)="onSelectPaymentMethod($event)"></app-payment-list>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2"> <!-- .col-md-2 -->
+        <div class="box">
+          <div class="title"><i class="fa fa-chevron-circle-right"></i>Place Order</div>
+          <div class="content">
+            <button class="button" [disabled]="!selectedShippingMethod || !selectedPayment" type="submit">Place Order</button>
+          </div>
+        </div>
+      </div> <!-- /.col-md-2 -->
+
+    </div> <!-- /.row -->
+
+    <div class="row"> <!-- .row -->
+      <div class="col-md-12"> <!-- .col-md-6 -->
+        <div class="box">
+          <div class="title"><i class="fa fa-comment"></i>Comments</div>
+          <div class="content">
+            <textarea name="comments" class="input" cols="30" rows="5"></textarea>
+          </div>
+        </div>
+      </div> <!-- /.col-md-6 -->
+
+    </div> <!-- /.row -->
+    
+  </form>
+
+</div>
     

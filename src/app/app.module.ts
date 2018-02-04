@@ -24,6 +24,7 @@ import { AddressService } from './services/address.service';
 import { OrderService } from './services/order.service';
 import { SearchService } from './services/search.service';
 import { StorageService } from './services/storage.service';
+import { PaymentService } from './services/payment.service';
 
 import { UserComponent } from './user/user.component';
 import { ProductListComponent } from './product-list/product-list.component';
@@ -49,6 +50,8 @@ import { CapslockDirective } from './directives/capslock.directive';
 import { MessageComponent } from './message/message.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
+import { PaymentListComponent } from './payment-list/payment-list.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +80,8 @@ import { SearchBoxComponent } from './search-box/search-box.component';
     MessageComponent,
     SpinnerComponent,
     SearchBoxComponent,
+    PaymentListComponent,
+    NavbarComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -101,7 +106,8 @@ import { SearchBoxComponent } from './search-box/search-box.component';
     AddressService,
     OrderService,
     SearchService,
-    StorageService
+    StorageService,
+    PaymentService
   ],
   bootstrap: [AppComponent]
 })

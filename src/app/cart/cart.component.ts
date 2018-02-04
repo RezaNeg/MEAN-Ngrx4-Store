@@ -18,7 +18,7 @@ export class CartComponent implements OnInit {
   private cartEmpty: boolean;
   private totalPrice: number = 0;
   private quantity: Array<number> = [];
-  private totalQuantity: number = 0;
+  public totalQuantity: number = 0;
 
   constructor(
     private cartService: CartService,

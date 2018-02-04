@@ -93,7 +93,8 @@ export class UserService {
       this.storageService.removeItem('id-token')
       // this.storageService.clear()
       this.authToken = null
-      
+      this.isAuthenticated = false
+      this.loggedIn =false
       this.router.navigate(['/']);
       return Observable.of({});
   }

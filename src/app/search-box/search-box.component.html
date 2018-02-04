@@ -26,7 +26,7 @@
 
     <app-spinner *ngIf="!isFinished && term.value" [type]="'small'"></app-spinner>
 
-    <app-product-list [products]="items"></app-product-list>
+    <app-product-list *ngIf="isFinished && term.value" [products]="items"></app-product-list>
     
   </div>
 

@@ -1,36 +1,10 @@
 <div class="page">
 
-  <div class="header row">
-    <app-search-box (searchEmitter)="handleSearchEmitter($event)" *ngIf="searchBoxVisible">
-    </app-search-box>
-
-    <div class="logo col-md-3">
-      <img [src]="appSetting_logo" width=200px alt="Hot Sauce Media" />
-    </div>
-
-    <div class="menu col-md-7">
-
-      <ul class="menu">
-        <li><a routerLink="/">Home</a></li>
-        <li><a routerLink="/products">Products</a></li>
-        <li><a routerLink="/about">About</a></li>
-        <li><a routerLink="/contact">Contact</a></li>
-      </ul>
-
-    </div>
-
-    <div class="top-bar col-md-2">
-      <i (click)="toggleSearch()" class="fa fa-search fa-2x" aria-hidden="true"></i>
-      <a routerLink="cart"><i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i></a>
-      <app-dropdown icon="fa fa-user-o fa-2x" [items]="getDropdownValues()"></app-dropdown>      
-    </div>
-
-  </div>
-
+  <app-navbar></app-navbar>
   <router-outlet></router-outlet>
-
+  <!-- <div class="footer"> -->
+      <p class="message ">© Copyright 2017-2018 - All rights reserved</p>
+    <!-- </div> -->
 </div>
 
-<div class="footer">
-  © Copyright 2018 - All rights reserved
-</div>
+

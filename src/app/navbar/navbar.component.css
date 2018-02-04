@@ -1,0 +1,21 @@
+
+.qty {
+    position: relative;
+}
+
+.badge {
+    font-size: .4em;
+    color: white;
+    display: block;
+    position: absolute;
+    top: -1em;
+    right: -0.75em;
+    width: 2em;
+    height: 2em;
+    line-height:1.5em;
+    border-radius: 90%;
+    text-align: center;
+    
+    /* color: #fff; */
+    background: rgb(255, 13, 13);
+}
